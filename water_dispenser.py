@@ -1,6 +1,8 @@
 # Write a program that keeps track of people getting water from a dispenser and the amount of water left at the end. 
 # On the first line, you will receive the starting quantity of water (integer) in a dispenser. 
-# Then, on the following lines, you will be given the names of some people who want to get water (each on a separate line) until you receive the command "Start". Add those people to a queue. Finally, you will receive some commands until the command "End":
+# Then, on the following lines, you will be given the names of some people who want to get water (each on a separate line) 
+# until you receive the command "Start". Add those people to a queue. 
+# Finally, you will receive some commands until the command "End":
 # -	"{liters}" - litters (integer) that the current person in the queue wants to get. 
 # Check if there is enough water in the dispenser for that person.
 # o	If there is enough water, print "{person_name} got water" and remove him/her from the queue.
@@ -18,15 +20,43 @@ while True:
     if command == "Start":
         break
     people.append(command)
-    elif command == "
 
-for person in people:
-    liters = int(input())
-    if water >= liters:
-        print(f"{person} got water")
-        water -= liters
+while True:
+    command = input()
+    if command == "End":
+        print(f"{water} liters left")
+        break
+    if command.startswith("refill"):
+        water += int(command.split()[1])
     else:
-        print(f"{person} must wait")
-        people.popleft()
+        if water >= int(command):
+            print(f"{people.popleft()} got water")
+            water -= int(command)
+        else:
+            print(f"{people.popleft()} must wait")
 
-print(f"{water} liters left")
+
+
+
+
+
+
+
+
+
+
+
+# command = input()
+
+# while not command == "Start":
+#     command = input().split()
+#     if len(command) == 1:
+#         people.append(command[0])
+#     else:
+#         water += int(command[1])
+#     if water <= 0:
+#         print(f"{people.popleft()} must wait")
+#     else:
+#         print(f"{people.popleft()} got water")
+#         water -= int(command[1])
+# print(f"{water} liters left")
