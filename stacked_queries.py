@@ -18,10 +18,17 @@ for _ in range(n_count):
     elif command[0] == '2':
         if stack:
             stack.pop()
-
     elif command[0] == '3':
         print(max(stack))
     elif command[0] == '4':
         print(min(stack))
 
 print(', '.join([str(x) for x in reversed(stack)]))
+
+
+# for x in reversed(stack):
+    
+#     # remove last comma
+#     if x == stack[0]:
+#         print(x, end=' ')
+#     print(x, end=', ')
