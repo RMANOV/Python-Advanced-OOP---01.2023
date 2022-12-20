@@ -18,9 +18,9 @@ for _ in range(n_count):
     elif command[0] == '2':
         if stack:
             stack.pop()
-    elif command[0] == '3':
+    elif command[0] == '3' and stack:
         print(max(stack))
-    elif command[0] == '4':
+    elif command[0] == '4' and stack:
         print(min(stack))
 
 print(', '.join([str(x) for x in reversed(stack)]))
