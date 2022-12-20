@@ -26,12 +26,23 @@ orders = collections.deque([int(x) for x in input().split()])
 print(max(orders))
 
 
-for order in orders:    
+while orders:
+    order = orders.popleft()
     if order > food_quantity:
-        print(f"Orders left: {' '.join([str(x) for x in orders])}")
-        orders.clear()
+        orders.appendleft(order)
         break
     food_quantity -= order
 if orders:
-    orders.popleft()
-print("Orders complete")
+    print(f"Orders left: {' '.join([str(x) for x in orders])}")
+else:
+    print("Orders complete")
+
+# for order in orders:
+#     if order > food_quantity:
+#         print(f"Orders left: {' '.join([str(x) for x in orders])}")
+#         orders.clear()
+#         break
+#     food_quantity -= order
+# if orders:
+#     orders.popleft()
+# print("Orders complete")
