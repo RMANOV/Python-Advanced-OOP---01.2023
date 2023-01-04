@@ -21,27 +21,57 @@
 # •	You will always have at least one point from where the truck will be able to complete the circle
 
 number_of_petrol_pumps = int(input())
+petrol_pumps = []
+
 for i in range(number_of_petrol_pumps):
-    petrol_pump = input().split()
-    petrol_pump = [int(x) for x in petrol_pump]
-    petrol_pump.append(petrol_pump[0] - petrol_pump[1])
-    petrol_pump.pop(0)
-    petrol_pump.pop(0)
-    if i == 0:
-        petrol_pump.append(petrol_pump[0])
-        petrol_pump.pop(0)
+    amount, distance = map(int, input().split())
+    petrol_pumps.append((amount, distance))
+
+for i, (amount, distance) in enumerate(petrol_pumps):
+    petrol = amount
+    for j in range(i, i + number_of_petrol_pumps):
+        petrol -= distance
+        next_pump = (j + 1) % number_of_petrol_pumps
+        petrol += petrol_pumps[next_pump][0]
+        if petrol < 0:
+            break
     else:
-        petrol_pump.append(petrol_pump[0] + petrol_pump[1])
-        petrol_pump.pop(0)
-        petrol_pump.pop(0)
-    if i == 0:
-        petrol_pump.append(petrol_pump[0])
-        petrol_pump.pop(0)
-    else:
-        petrol_pump.append(petrol_pump[0] + petrol_pump[1])
-        petrol_pump.pop(0)
-        petrol_pump.pop(0)
-    if petrol_pump[0] >= 0 and petrol_pump[1] >= 0:
         print(i)
         break
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# for i in range(number_of_petrol_pumps):
+#     petrol_pump = input().split()
+#     petrol_pump = [int(x) for x in petrol_pump]
+#     petrol_pump.append(petrol_pump[0] - petrol_pump[1])
+#     petrol_pump.pop(0)
+#     petrol_pump.pop(0)
+#     if i == 0:
+#         petrol_pump.append(petrol_pump[0])
+#         petrol_pump.pop(0)
+#     else:
+#         petrol_pump.append(petrol_pump[0] + petrol_pump[1])
+#         petrol_pump.pop(0)
+#         petrol_pump.pop(0)
+#     if i == 0:
+#         petrol_pump.append(petrol_pump[0])
+#         petrol_pump.pop(0)
+#     else:
+#         petrol_pump.append(petrol_pump[0] + petrol_pump[1])
+#         petrol_pump.pop(0)
+#         petrol_pump.pop(0)
+#     if petrol_pump[0] >= 0 and petrol_pump[1] >= 0:
+#         print(i)
+#         break
