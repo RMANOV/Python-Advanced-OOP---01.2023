@@ -28,19 +28,22 @@ stack = []
 number_of_racks = 0
 
 while list_of_clothes:
-    if sum(stack) + list_of_clothes[-1] <= rack_capacity:
-        stack.append(list_of_clothes.pop())
-        number_of_racks += 1
+    current_item = list_of_clothes.pop()
+    if sum(stack) + current_item <= rack_capacity:
+        stack.append(current_item)
     if sum(stack) == rack_capacity:
         number_of_racks += 1
         stack = []
     elif sum(stack) > rack_capacity:
         number_of_racks += 1
         stack = []
-        if list_of_clothes:
-            stack.append(list_of_clothes.pop())
+        stack.append(current_item)
 
-print(number_of_racks + 1)
+if stack:
+    number_of_racks += 1
+
+print(number_of_racks)
+
 
 
 
