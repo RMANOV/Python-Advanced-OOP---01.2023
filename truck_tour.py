@@ -31,6 +31,7 @@ for i in range(number_of_petrol_pumps):
 
 petrol = 0
 index = 0
+min_index = 0
 
 while queue:
     amount, distance = queue.popleft()
@@ -39,11 +40,36 @@ while queue:
     if petrol < 0:
         petrol = 0
         index = (index + 1) % number_of_petrol_pumps
+        min_index = index
     else:
         index = (index + 1) % number_of_petrol_pumps
+        min_index = min(min_index, index)
     queue.append((amount, distance))
 
-print(index)
+print(min_index)
+
+
+
+
+# for i in range(number_of_petrol_pumps):
+#     amount, distance = map(int, input().split())
+#     queue.append((amount, distance))
+
+# petrol = 0
+# index = 0
+
+# while queue:
+#     amount, distance = queue.popleft()
+#     petrol += amount
+#     petrol -= distance
+#     if petrol < 0:
+#         petrol = 0
+#         index = (index + 1) % number_of_petrol_pumps
+#     else:
+#         index = (index + 1) % number_of_petrol_pumps
+#     queue.append((amount, distance))
+
+# print(index)
 
 
 # while queue:
