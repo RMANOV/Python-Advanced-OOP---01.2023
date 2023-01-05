@@ -29,22 +29,15 @@ for i in range(number_of_petrol_pumps):
     amount, distance = map(int, input().split())
     queue.append((amount, distance))
 
-petrol = 0
-index = 0
 min_index = 0
+petrol = 0
 
-while queue:
-    amount, distance = queue.popleft()
+for i, (amount, distance) in enumerate(queue):
     petrol += amount
     petrol -= distance
     if petrol < 0:
+        min_index = i + 1
         petrol = 0
-        index = (index + 1) % number_of_petrol_pumps
-        min_index = index
-    else:
-        index = (index + 1) % number_of_petrol_pumps
-        min_index = min(min_index, index)
-    queue.append((amount, distance))
 
 print(min_index)
 
