@@ -20,9 +20,10 @@
 # •	1 ≤ amount of petrol, distance ≤ 1000000000
 # •	You will always have at least one point from where the truck will be able to complete the circle
 
+from collections import deque
 
 number_of_petrol_pumps = int(input())
-queue = []
+queue = deque()
 
 for i in range(number_of_petrol_pumps):
     amount, distance = map(int, input().split())
@@ -32,7 +33,7 @@ petrol = 0
 index = 0
 
 while queue:
-    amount, distance = queue.pop(0)
+    amount, distance = queue.popleft()
     petrol += amount
     petrol -= distance
     if petrol < 0:
@@ -43,6 +44,20 @@ while queue:
     queue.append((amount, distance))
 
 print(index)
+
+
+# while queue:
+#     amount, distance = queue.pop(0)
+#     petrol += amount
+#     petrol -= distance
+#     if petrol < 0:
+#         petrol = 0
+#         index = (index + 1) % number_of_petrol_pumps
+#     else:
+#         index = (index + 1) % number_of_petrol_pumps
+#     queue.append((amount, distance))
+
+# print(index)
 
 
 
