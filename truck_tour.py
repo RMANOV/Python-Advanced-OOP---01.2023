@@ -20,24 +20,55 @@
 # •	1 ≤ amount of petrol, distance ≤ 1000000000
 # •	You will always have at least one point from where the truck will be able to complete the circle
 
+
 number_of_petrol_pumps = int(input())
-petrol_pumps = []
+queue = []
 
 for i in range(number_of_petrol_pumps):
     amount, distance = map(int, input().split())
-    petrol_pumps.append((amount, distance))
+    queue.append((amount, distance))
 
-for i, (amount, distance) in enumerate(petrol_pumps):
-    petrol = amount
-    for j in range(i, i + number_of_petrol_pumps):
-        petrol -= distance
-        next_pump = (j + 1) % number_of_petrol_pumps
-        petrol += petrol_pumps[next_pump][0]
-        if petrol < 0:
-            break
+petrol = 0
+index = 0
+
+while queue:
+    amount, distance = queue.pop(0)
+    petrol += amount
+    petrol -= distance
+    if petrol < 0:
+        petrol = 0
+        index = (index + 1) % number_of_petrol_pumps
     else:
-        print(i)
-        break
+        index = (index + 1) % number_of_petrol_pumps
+    queue.append((amount, distance))
+
+print(index)
+
+
+
+
+
+# number_of_petrol_pumps = int(input())
+# petrol_pumps = []
+# minimum = 0
+
+# for i in range(number_of_petrol_pumps):
+#     amount, distance = map(int, input().split())
+#     petrol_pumps.append((amount, distance))
+
+# for i, (amount, distance) in enumerate(petrol_pumps):
+#     petrol = amount
+#     for j in range(i, i + number_of_petrol_pumps):
+#         petrol -= distance
+#         next_pump = (j + 1) % number_of_petrol_pumps
+#         petrol += petrol_pumps[next_pump][0]
+#         minimum = min(minimum, petrol)
+#         if petrol < 0:
+#             break
+#     else:
+#         print(minimum)
+#         # print(i)
+#         break
 
 
 
