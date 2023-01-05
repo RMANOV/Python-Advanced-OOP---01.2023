@@ -10,5 +10,6 @@ for i in range(number_of_names):
     names_set.add(name)
 
 unique_names = list(names_set)
-print(*unique_names, sep ="")
-
+unique_names.sort()
+for name in unique_names:
+    print(name)
