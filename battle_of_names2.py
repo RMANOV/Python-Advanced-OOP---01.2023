@@ -21,20 +21,27 @@ for i in range(1, number_of_names + 1):
         ascii_sum_even += ascii_sum
     else:
         ascii_sum_odd += ascii_sum
-
+        
 if ascii_sum_even == ascii_sum_odd:
     # print the union of the values, separated by ", "
     odd_values = set(range(1, ascii_sum_odd+1, 2))
     even_values = set(range(0, ascii_sum_even+1, 2))
     result = odd_values.union(even_values)
     print(", ".join([str(x) for x in result]))
-elif ascii_sum_even > ascii_sum_odd:
-    odd_values = set(range(1, ascii_sum_odd+1, 2))
-    even_values = set(range(0, ascii_sum_even+1, 2))
-    result = even_values.difference(odd_values)
-    print(", ".join([str(x) for x in result]))
-else:
-    odd_values = set(range(1, ascii_sum_odd+1, 2))
-    even_values = set(range(0, ascii_sum_even+1, 2))
-    result = odd_values.symmetric_difference(even_values)
-    print(", ".join([str(x) for x in result]))
+
+# if ascii_sum_even == ascii_sum_odd:
+#     # print the union of the values, separated by ", "
+#     odd_values = set(range(1, ascii_sum_odd+1, 2))
+#     even_values = set(range(0, ascii_sum_even+1, 2))
+#     result = odd_values.union(even_values)
+#     print(", ".join([str(x) for x in result]))
+# elif ascii_sum_even > ascii_sum_odd:
+#     odd_values = set(range(1, ascii_sum_odd+1, 2))
+#     even_values = set(range(0, ascii_sum_even+1, 2))
+#     result = even_values.difference(odd_values)
+#     print(", ".join([str(x) for x in result]))
+# else:
+#     odd_values = set(range(1, ascii_sum_odd+1, 2))
+#     even_values = set(range(0, ascii_sum_even+1, 2))
+#     result = odd_values.symmetric_difference(even_values)
+#     print(", ".join([str(x) for x in result]))
