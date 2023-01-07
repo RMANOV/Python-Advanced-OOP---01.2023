@@ -6,6 +6,8 @@
 # •	If the sum of the even numbers is bigger than the sum of the odd numbers, print the symmetric-different values, separated by ", ".
 # NOTE: On every operation, the starting set should be the odd set
 
+
+
 number_of_names = int(input())
 
 ascii_sum_odd = 0
@@ -29,6 +31,31 @@ elif ascii_sum_even > ascii_sum_odd:
     print(", ".join([str(x) for x in range(ascii_sum_even + 1, ascii_sum_odd)]))
 else:
     print(", ".join([str(x) for x in range(ascii_sum_odd + 1, ascii_sum_even)]))
+
+
+# number_of_names = int(input())
+
+# ascii_sum_odd = 0
+# ascii_sum_even = 0
+
+# for i in range(1, number_of_names + 1):
+#     name = input()
+#     ascii_sum = 0
+#     for letter in name:
+#         ascii_sum += ord(letter)
+#     ascii_sum = ascii_sum // i
+#     if ascii_sum % 2 == 0:
+#         ascii_sum_even += ascii_sum
+#     else:
+#         ascii_sum_odd += ascii_sum
+
+# if ascii_sum_even == ascii_sum_odd:
+#     # print the union of the values, separated by ", "
+#     print(", ".join([str(x) for x in range(ascii_sum_even + 1)]))
+# elif ascii_sum_even > ascii_sum_odd:
+#     print(", ".join([str(x) for x in range(ascii_sum_even + 1, ascii_sum_odd)]))
+# else:
+#     print(", ".join([str(x) for x in range(ascii_sum_odd + 1, ascii_sum_even)]))
 
 
 
