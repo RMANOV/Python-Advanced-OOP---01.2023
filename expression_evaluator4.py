@@ -42,7 +42,7 @@ while tokens:
         # Token is an operator, process the last two numbers in the stack
         num2 = numbers.pop()
         num1 = numbers.pop()
-        
+
         if token == "*":
             result = num1 * num2
         elif token == "/":
@@ -56,8 +56,6 @@ while tokens:
 
 # The final result should be the only element in the stack
 print(numbers[0])
-
-
 
 
 # for token in expression:
