@@ -8,8 +8,8 @@
 
 number_of_names = int(input())
 
-ascii_sum_odd = 0
-ascii_sum_even = 0
+odd_set = set()
+even_set = set()
 
 for i in range(1, number_of_names + 1):
     name = input()
@@ -18,16 +18,26 @@ for i in range(1, number_of_names + 1):
         ascii_sum += ord(letter)
     ascii_sum = ascii_sum // i
     if ascii_sum % 2 == 0:
-        ascii_sum_even += ascii_sum
+        even_set.add(ascii_sum)
     else:
-        ascii_sum_odd += ascii_sum
-        
-if ascii_sum_even == ascii_sum_odd:
+        odd_set.add(ascii_sum)
+
+odd_sum = sum(odd_set)
+even_sum = sum(even_set)
+
+if odd_sum <= even_sum:
     # print the union of the values, separated by ", "
-    odd_values = set(range(1, ascii_sum_odd+1, 2))
-    even_values = set(range(0, ascii_sum_even+1, 2))
-    result = odd_values.union(even_values)
-    print(", ".join([str(x) for x in result]))
+    result = odd_set.union(even_set)
+elif odd_sum > even_sum:
+    result = odd_set.difference(even_set)
+else:
+    result = even_set.difference(odd_set)
+
+print(", ".join([str(x) for x in result]))
+
+
+
+
 
 # if ascii_sum_even == ascii_sum_odd:
 #     # print the union of the values, separated by ", "
