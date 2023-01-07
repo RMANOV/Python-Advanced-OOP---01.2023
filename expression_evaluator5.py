@@ -24,23 +24,15 @@
 
 from collections import deque
 
-expression = input().split()
-
-# Use a queue to store the digits and operators
-tokens = deque(expression)
-
-# Use a stack to store the numbers
-numbers = []
-
 def evaluate(operator, num1, num2):
     if operator == "*":
-        return num1 * num2
+        return num2 * num1
     elif operator == "/":
-        return num1 // num2
+        return num2 // num1
     elif operator == "+":
-        return num1 + num2
+        return num2 + num1
     elif operator == "-":
-        return num1 - num2
+        return num2 - num1
 
 def is_operator(token):
     return token in {"*", "/", "+", "-"}
@@ -50,11 +42,15 @@ def is_number(token):
 
 def process_operator(operator):
     # Pop the last two numbers from the stack
-    num2 = numbers.pop()
-    num1 = numbers.pop()
-    result = evaluate(operator, num1, num2)
-    # Push the result back to the stack
-    numbers.append(result)
+    if len(numbers) < 2:
+        return
+    else:
+        num2 = numbers.pop()
+        num1 = numbers.pop()
+        result = evaluate(operator, num1, num2)
+        # Push the result back to the stack
+        numbers.append(result)
+
 
 def process_number(number):
     # Token is a number, just push it to the stack
@@ -67,6 +63,7 @@ def process_token(token):
         process_number(token)
 
 def process_tokens():
+    tokens.reverse()
     while tokens:
         token = tokens.popleft()
         process_token(token)
@@ -79,9 +76,22 @@ def main():
     print_result()
 
 if __name__ == "__main__":
+    # Use a queue to store the digits and operators
+    tokens = deque(input().split())
+    # Use a stack to store the numbers
+    numbers = []
     main()
+result():
+    print(numbers[0])
 
 
+def main():
+    process_tokens()
+    print_result()
+
+
+if __name__ == "__main__":
+    main()
 
 
 # for token in expression:
