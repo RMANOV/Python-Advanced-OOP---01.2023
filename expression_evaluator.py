@@ -22,24 +22,24 @@
 # •	There might be negative numbers in the string
 
 
+from collections import deque
+
 expression = input().split()
 
-# Use a stack to store the numbers and operators
-stack = []
+# Use queues to store the numbers and operators
+numbers = deque()
+operators = deque()
 
 # Precedence levels for the operators
 precedence = {'*': 2, '/': 2, '+': 1, '-': 1}
 
 for token in expression:
     if token in precedence:
-        # Process the operators in the stack according to their precedence
-        while stack and stack[-1] in precedence and precedence[stack[-1]] >= precedence[token]:
-            op = stack.pop()
-            if len(stack) < 2:
-                # Not enough elements in the stack to perform the operation
-                break
-            num2 = stack.pop()
-            num1 = stack.pop()
+        # Process the operators in the queue according to their precedence
+        while operators and precedence[operators[0]] >= precedence[token]:
+            num2 = numbers.popleft()
+            num1 = numbers.popleft()
+            op = operators.popleft()
             if op == "*":
                 result = num1 * num2
             elif op == "/":
@@ -48,20 +48,17 @@ for token in expression:
                 result = num1 + num2
             elif op == "-":
                 result = num1 - num2
-            stack.append(result)
-        stack.append(token)
+            numbers.appendleft(result)
+        operators.appendleft(token)
     else:
-        # Token is a number, just push it to the stack
-        stack.append(int(token))
+        # Token is a number, just push it to the numbers queue
+        numbers.appendleft(int(token))
 
-# Process the remaining operators in the stack
-while len(stack) > 1:
-    if len(stack) < 3:
-        # Not enough elements in the stack to perform the operation
-        break
-    num2 = stack.pop()
-    num1 = stack.pop()
-    op = stack.pop()
+# Process the remaining operators in the queue
+while operators:
+    num2 = numbers.popleft()
+    num1 = numbers.popleft()
+    op = operators.popleft()
     if op == "*":
         result = num1 * num2
     elif op == "/":
@@ -70,10 +67,56 @@ while len(stack) > 1:
         result = num1 + num2
     elif op == "-":
         result = num1 - num2
-    stack.append(result)
+    numbers.appendleft(result)
 
-# The final result should be the only element in the stack
-print(stack[0])
+print(numbers[0])
+
+
+
+# for token in expression:
+#     if token in precedence:
+#         # Process the operators in the stack according to their precedence
+#         while stack and stack[-1] in precedence and precedence[stack[-1]] >= precedence[token]:
+#             op = stack.pop()
+#             if len(stack) < 2:
+#                 # Not enough elements in the stack to perform the operation
+#                 break
+#             num2 = stack.pop()
+#             num1 = stack.pop()
+#             if op == "*":
+#                 result = num1 * num2
+#             elif op == "/":
+#                 result = num1 // num2
+#             elif op == "+":
+#                 result = num1 + num2
+#             elif op == "-":
+#                 result = num1 - num2
+#             stack.append(result)
+#         stack.append(token)
+#     else:
+#         # Token is a number, just push it to the stack
+#         stack.append(int(token))
+
+# # Process the remaining operators in the stack
+# while len(stack) > 1:
+#     if len(stack) < 3:
+#         # Not enough elements in the stack to perform the operation
+#         break
+#     num2 = stack.pop()
+#     num1 = stack.pop()
+#     op = stack.pop()
+#     if op == "*":
+#         result = num1 * num2
+#     elif op == "/":
+#         result = num1 // num2
+#     elif op == "+":
+#         result = num1 + num2
+#     elif op == "-":
+#         result = num1 - num2
+#     stack.append(result)
+
+# # The final result should be the only element in the stack
+# print(stack[0])
 
 
 
