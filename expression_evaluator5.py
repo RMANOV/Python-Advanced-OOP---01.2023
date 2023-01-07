@@ -24,74 +24,31 @@
 
 from collections import deque
 
-def evaluate(operator, num1, num2):
-    if operator == "*":
-        return num2 * num1
-    elif operator == "/":
-        return num2 // num1
-    elif operator == "+":
-        return num2 + num1
-    elif operator == "-":
-        return num2 - num1
+expression = input().split()
+numbers = deque()
+operators = deque()
 
-def is_operator(token):
-    return token in {"*", "/", "+", "-"}
-
-def is_number(token):
-    return not is_operator(token)
-
-def process_operator(operator):
-    # Pop the last two numbers from the stack
-    if len(numbers) < 2:
-        return
+for i in expression:
+    if i in {"*", "/", "+", "-"}:
+        operators.append(i)
     else:
-        num2 = numbers.pop()
-        num1 = numbers.pop()
-        result = evaluate(operator, num1, num2)
-        # Push the result back to the stack
-        numbers.append(result)
+        numbers.append(int(i))
 
+for i in operators:
+    if i == "*":
+        result = numbers.popleft() * numbers.popleft()
+        numbers.appendleft(result)
+    elif i == "/":
+        result = numbers.popleft() // numbers.popleft()
+        numbers.appendleft(result)
+    elif i == "+":
+        result = numbers.popleft() + numbers.popleft()
+        numbers.appendleft(result)
+    elif i == "-":
+        result = numbers.popleft() - numbers.popleft()
+        numbers.appendleft(result)
 
-def process_number(number):
-    # Token is a number, just push it to the stack
-    numbers.append(int(number))
-
-def process_token(token):
-    if is_operator(token):
-        process_operator(token)
-    else:
-        process_number(token)
-
-def process_tokens():
-    tokens.reverse()
-    while tokens:
-        token = tokens.popleft()
-        process_token(token)
-
-def print_result():
-    print(numbers[0])
-
-def main():
-    process_tokens()
-    print_result()
-
-if __name__ == "__main__":
-    # Use a queue to store the digits and operators
-    tokens = deque(input().split())
-    # Use a stack to store the numbers
-    numbers = []
-    main()
-result():
-    print(numbers[0])
-
-
-def main():
-    process_tokens()
-    print_result()
-
-
-if __name__ == "__main__":
-    main()
+print(numbers[0])
 
 
 # for token in expression:
