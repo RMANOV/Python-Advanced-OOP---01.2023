@@ -45,11 +45,8 @@ while chocolate_stack and milk_queue:
         if chocolate_stack[-1] <= 0:
             chocolate_stack.pop()
 
-# remove negative chocolates
-chocolate_stack = [x for x in chocolate_stack if x > 0]
-milk_queue = [x for x in milk_queue if x > 0]
 
-if len(chocolate_stack) == 0 or len(milk_queue) == 0 or milkshakes < 5:
+if milkshakes < 5:
     print("Not enough milkshakes.")
 else:
     print("Great! You made all the chocolate milkshakes needed!")
