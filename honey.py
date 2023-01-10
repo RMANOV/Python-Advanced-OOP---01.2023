@@ -49,7 +49,7 @@ while bee_list and nectar_deque:
         continue
     
     bee = bee_list.pop(0)
-    nectar = nectar_deque.pop()
+    nectar = nectar_deque.popleft()
     symbol = symbols.pop(0)
     if nectar >= bee:
         if symbol == "+":
@@ -73,3 +73,4 @@ if bee_list:
     print(f"Bees left: {', '.join([str(x) for x in bee_list])}")
 if nectar_deque:
     print(f"Nectar left: {', '.join([str(x) for x in nectar_deque])}")
+
