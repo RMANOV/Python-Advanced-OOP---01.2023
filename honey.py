@@ -73,4 +73,3 @@ if bee_list:
     print(f"Bees left: {', '.join([str(x) for x in bee_list])}")
 if nectar_deque:
     print(f"Nectar left: {', '.join([str(x) for x in nectar_deque])}")
-
