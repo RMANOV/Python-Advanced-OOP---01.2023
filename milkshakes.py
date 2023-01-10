@@ -24,6 +24,7 @@
 
 chocolate = [int(x) for x in input().split(", ")]
 milk = [int(x) for x in input().split(", ")]
+milkshakes = 0
 
 while len(chocolate) > 0 and len(milk) > 0:
     if chocolate[-1] == milk[0]:
@@ -31,6 +32,9 @@ while len(chocolate) > 0 and len(milk) > 0:
             break
         chocolate.pop()
         milk.pop(0)
+        milkshakes += 1
+        if milkshakes == 5:
+            break
     else:
         milk.append(milk.pop(0))
         chocolate[-1] -= 5
@@ -65,7 +69,7 @@ while len(chocolate) > 0 and len(milk) > 0:
 #         if chocolate[-1] <= 0:
 #             chocolate.pop()
 
-if len(chocolate) == 0:
+if len(chocolate) == 0 or len(milk) == 0 or milkshakes < 5:
     print("Not enough milkshakes.")
 else:
     print("Great! You made all the chocolate milkshakes needed!")
