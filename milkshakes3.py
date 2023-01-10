@@ -22,44 +22,80 @@
 # o	If there are cups of milk left: "Milk: {milk1}, {milk2}, {milk3}, (…)"
 # o	Otherwise: "Milk: empty"
 
-def milkshakess(chocolate, milk):
-    milkshakes = 0
-    while len(chocolate) > 0 and len(milk) > 0:
-        if chocolate[-1] == milk[0]:
-            if len(chocolate) == 1 and len(milk) == 1:
-                break
+chocolate = [int(x) for x in input().split(", ")]
+milk = [int(x) for x in input().split(", ")]
+milkshakes = 0
+
+while len(chocolate) > 0 and len(milk) > 0:
+    if chocolate[-1] == milk[0]:
+        if len(chocolate) == 1 and len(milk) == 1:
+            break
+        chocolate.pop()
+        milk.pop(0)
+        milkshakes += 1
+        if milkshakes == 5:
+            break
+    else:
+        milk.append(milk.pop(0))
+        chocolate[-1] -= 5
+        if chocolate[-1] <= 0:
             chocolate.pop()
-            milk.pop(0)
-            milkshakes += 1
-            if milkshakes == 5:
-                break
-        else:
-            milk.append(milk.pop(0))
-            chocolate[-1] -= 5
-            if chocolate[-1] <= 0:
-                chocolate.pop()
-    chocolate = [x for x in chocolate if x > 0]
-    milk = [x for x in milk if x > 0]
-    if len(chocolate) == 0 or len(milk) == 0 or milkshakes < 5:
-        print("Not enough milkshakes.")
-    else:
-        print("Great! You made all the chocolate milkshakes needed!")
-    if len(chocolate) == 0:
-        print("Chocolate: empty")
-    else:
-        print(f"Chocolate: {', '.join([str(x) for x in chocolate])}")
-    if len(milk) == 0:
-        print("Milk: empty")
-    else:
-        print(f"Milk: {', '.join([str(x) for x in milk])}")
 
-def main():
-    chocolate = [int(x) for x in input().split(", ")]
-    milk = [int(x) for x in input().split(", ")]
-    milkshakess(chocolate, milk)
 
-if __name__ == "__main__":
-    main()
+
+if len(chocolate) == 0 or len(milk) == 0 or milkshakes < 5:
+    print("Not enough milkshakes.")
+else:
+    print("Great! You made all the chocolate milkshakes needed!")
+
+if not chocolate:
+    print("Chocolate: empty")
+else:
+    print(f"Chocolate: {', '.join([str(x) for x in chocolate])}")
+
+if not milk:
+    print("Milk: empty")
+else:
+    print(f"Milk: {', '.join([str(x) for x in milk])}")
+
+# def milkshakess(chocolate, milk):
+#     milkshakes = 0
+#     while len(chocolate) > 0 and len(milk) > 0:
+#         if chocolate[-1] == milk[0]:
+#             if len(chocolate) == 1 and len(milk) == 1:
+#                 break
+#             chocolate.pop()
+#             milk.pop(0)
+#             milkshakes += 1
+#             if milkshakes == 5:
+#                 break
+#         else:
+#             milk.append(milk.pop(0))
+#             chocolate[-1] -= 5
+#             if chocolate[-1] <= 0:
+#                 chocolate.pop()
+#     chocolate = [x for x in chocolate if x > 0]
+#     milk = [x for x in milk if x > 0]
+#     if len(chocolate) == 0 or len(milk) == 0 or milkshakes < 5:
+#         print("Not enough milkshakes.")
+#     else:
+#         print("Great! You made all the chocolate milkshakes needed!")
+#     if len(chocolate) == 0:
+#         print("Chocolate: empty")
+#     else:
+#         print(f"Chocolate: {', '.join([str(x) for x in chocolate])}")
+#     if len(milk) == 0:
+#         print("Milk: empty")
+#     else:
+#         print(f"Milk: {', '.join([str(x) for x in milk])}")
+
+# def main():
+#     chocolate = [int(x) for x in input().split(", ")]
+#     milk = [int(x) for x in input().split(", ")]
+#     milkshakess(chocolate, milk)
+
+# if __name__ == "__main__":
+#     main()
 
 
 # while len(chocolate) > 0 and len(milk) > 0:
