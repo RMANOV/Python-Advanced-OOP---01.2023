@@ -25,14 +25,10 @@
 chocolate = [int(x) for x in input().split(", ")]
 milk = [int(x) for x in input().split(", ")]
 
-for i in range(len(chocolate)):
-    chocolate[i] -= 5
-    if chocolate[i] <= 0:
-        chocolate.pop(i)
-        i -= 1
-
 while len(chocolate) > 0 and len(milk) > 0:
     if chocolate[-1] == milk[0]:
+        if len(chocolate) == 1 and len(milk) == 1:
+            break
         chocolate.pop()
         milk.pop(0)
     else:
@@ -40,6 +36,34 @@ while len(chocolate) > 0 and len(milk) > 0:
         chocolate[-1] -= 5
         if chocolate[-1] <= 0:
             chocolate.pop()
+
+
+
+
+
+
+
+# for i in range(len(chocolate)):
+#     chocolate[i] -= 5
+#     if chocolate[i] <= 0:
+#         if i == len(chocolate) - 1:
+#             chocolate.pop()
+#         else:
+#             chocolate.pop(i)
+#             i -= 1
+
+
+# while len(chocolate) > 0 and len(milk) > 0:
+#     if chocolate[-1] == milk[0]:
+#         if len(chocolate) == 1 and len(milk) == 1:
+#             break
+#         chocolate.pop()
+#         milk.pop(0)
+#     else:
+#         milk.append(milk.pop(0))
+#         chocolate[-1] -= 5
+#         if chocolate[-1] <= 0:
+#             chocolate.pop()
 
 if len(chocolate) == 0:
     print("Not enough milkshakes.")
