@@ -1,15 +1,15 @@
 # Milkshakes
 # You are learning how to make milkshakes.
 # First, you will be given two sequences of integers representing chocolates and cups of milk.
-# You have to start with the last chocolate and try to match it with the first cup of milk. 
-# If their values are equal, you should make a milkshake and remove both ingredients. 
+# You have to start with the last chocolate and try to match it with the first cup of milk.
+# If their values are equal, you should make a milkshake and remove both ingredients.
 # Otherwise, you should move the cup of milk at the end of the sequence and decrease the value of the chocolate by 5 without moving it from its position.
-# If any of the values are equal to or below 0, 
+# If any of the values are equal to or below 0,
 # you should remove them from the records right before mixing them with the other ingredient.
-# When you successfully prepare 5 chocolate milkshakes, or you have no more chocolate or cups of milk left, 
+# When you successfully prepare 5 chocolate milkshakes, or you have no more chocolate or cups of milk left,
 # you need to stop making chocolate milkshakes.
 # Input
-# •	On the first line of input, you will receive the integers representing the chocolate, separated by  ", ". 
+# •	On the first line of input, you will receive the integers representing the chocolate, separated by  ", ".
 # •	On the second line of input, you will receive the integers representing the cups of milk, separated by ", ".
 # Output
 # •	On the first line, print:
@@ -27,7 +27,9 @@ milk = [int(x) for x in input().split(", ")]
 milkshakes = 0
 
 while len(chocolate) > 0 and len(milk) > 0:
+    # if values are equal
     if chocolate[-1] == milk[0]:
+        # check if last element
         if len(chocolate) == 1 and len(milk) == 1:
             break
         chocolate.pop()
@@ -38,17 +40,13 @@ while len(chocolate) > 0 and len(milk) > 0:
     else:
         milk.append(milk.pop(0))
         chocolate[-1] -= 5
+        # if negative, remove chocolate
         if chocolate[-1] <= 0:
             chocolate.pop()
 
-for i in range(len(chocolate)):
-    chocolate[i] -= 5
-    if chocolate[i] <= 0:
-        if i == len(chocolate) - 1:
-            chocolate.pop()
-        else:
-            chocolate.pop(i)
-            i -= 1
+# remove negative chocolates
+chocolate = [x for x in chocolate if x > 0]
+milk = [x for x in milk if x > 0]
 
 if len(chocolate) == 0 or len(milk) == 0 or milkshakes < 5:
     print("Not enough milkshakes.")
@@ -81,11 +79,6 @@ else:
 #         chocolate[-1] -= 5
 #         if chocolate[-1] <= 0:
 #             chocolate.pop()
-
-
-
-
-
 
 
 # # for i in range(len(chocolate)):
