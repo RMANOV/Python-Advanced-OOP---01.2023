@@ -46,6 +46,12 @@ presents = defaultdict(int)
 while materials and magic:
     m = materials.pop()
     ma = magic.popleft()
+    if m == 0 or ma == 0:
+        if m == 0:
+            materials.append(m)
+        if ma == 0:
+            magic.append(ma)
+        continue
     product = m * ma
     if product == 150:
         presents["Doll"] += 1
