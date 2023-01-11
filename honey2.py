@@ -50,12 +50,10 @@ while bee_list and nectar_deque:
         symbol_list.pop(0)
     else:
         nectar_deque.pop()
-    if not nectar_deque:
+
+    if not nectar_deque or not bee_list or not symbol_list:
         break
-    if not bee_list:
-        break
-    if not symbol_list:
-        break
+
     
 if total_honey:
     print(f"Total honey made: {total_honey}")
