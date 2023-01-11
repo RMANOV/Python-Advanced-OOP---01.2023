@@ -39,34 +39,39 @@
 
 from collections import deque, defaultdict
 
+
+
 materials = deque([int(x) for x in input().split()])
-magic = deque([int(x) for x in input().split()])
+magic = input().split()
 presents = defaultdict(int)
 
-while materials and magic:
-    m = materials.pop()
-    ma = magic.popleft()
-    if m == 0 or ma == 0:
-        if m == 0:
-            materials.append(m)
-        if ma == 0:
-            magic.append(ma)
-        continue
-    product = m * ma
-    if product == 150:
-        presents["Doll"] += 1
-    elif product == 250:
-        presents["Wooden train"] += 1
-    elif product == 300:
-        presents["Teddy bear"] += 1
-    elif product == 400:
-        presents["Bicycle"] += 1
-    elif product < 0:
-        sum_val = m + ma
-        materials.append(sum_val)
-    elif product > 0:
-        materials.append(m + 15)
-    
+
+
+if materials and magic:
+    while materials and magic:
+        m = materials.pop()
+        ma = magic.popleft()
+        if m == 0 or ma == 0:
+            if m == 0:
+                materials.append(m)
+            if ma == 0:
+                magic.append(ma)
+            continue
+        product = m * ma
+        if product == 150:
+            presents["Doll"] += 1
+        elif product == 250:
+            presents["Wooden train"] += 1
+        elif product == 300:
+            presents["Teddy bear"] += 1
+        elif product == 400:
+            presents["Bicycle"] += 1
+        elif product < 0:
+            sum_val = m + ma
+            materials.append(sum_val)
+        elif product > 0 and product < 150:
+            materials.append(m + 15)
+
 if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (
     presents["Teddy bear"] >= 1 and presents["Bicycle"] >= 1
 ):
@@ -74,15 +79,59 @@ if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (
 else:
     print("No presents this Christmas!")
 
+# if materials are 0 do not print them
 if materials:
     print(f"Materials left: {', '.join(map(str, materials))}")
 
 if magic:
     print(f"Magic left: {', '.join(map(str, magic))}")
 
-for present in sorted(presents.keys()):
-    if presents[present] > 0:
-        print(f"{present}: {presents[present]}")
+if presents:
+    for present in sorted(presents.keys()):
+        if presents[present] > 0:
+            print(f"{present}: {presents[present]}")
+
+
+# while materials and magic:
+#     m = materials.pop()
+#     ma = magic.popleft()
+#     if m == 0 or ma == 0:
+#         if m == 0:
+#             materials.append(m)
+#         if ma == 0:
+#             magic.append(ma)
+#         continue
+#     product = m * ma
+#     if product == 150:
+#         presents["Doll"] += 1
+#     elif product == 250:
+#         presents["Wooden train"] += 1
+#     elif product == 300:
+#         presents["Teddy bear"] += 1
+#     elif product == 400:
+#         presents["Bicycle"] += 1
+#     elif product < 0:
+#         sum_val = m + ma
+#         materials.append(sum_val)
+#     elif product > 0:
+#         materials.append(m + 15)
+    
+# if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (
+#     presents["Teddy bear"] >= 1 and presents["Bicycle"] >= 1
+# ):
+#     print("The presents are crafted! Merry Christmas!")
+# else:
+#     print("No presents this Christmas!")
+
+# if materials:
+#     print(f"Materials left: {', '.join(map(str, materials))}")
+
+# if magic:
+#     print(f"Magic left: {', '.join(map(str, magic))}")
+
+# for present in sorted(presents.keys()):
+#     if presents[present] > 0:
+#         print(f"{present}: {presents[present]}")
 
 
 
