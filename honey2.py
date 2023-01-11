@@ -38,6 +38,14 @@ nectar_deque = deque([int(x) for x in input().split()])
 symbol_list = input().split()
 total_honey = 0
 
+if len(bee_list) > len(nectar_deque) and len(symbol_list) > len(nectar_deque):
+    symbol_list = symbol_list[:len(nectar_deque)]
+if len(bee_list) < len(nectar_deque) and len(symbol_list) < len(nectar_deque):
+    nectar_deque = deque(list(nectar_deque)[:len(bee_list)])
+if len(bee_list) < len(nectar_deque) and len(symbol_list) > len(nectar_deque):
+    symbol_list = symbol_list[:len(nectar_deque)]
+    nectar_deque = deque(list(nectar_deque)[:len(bee_list)])
+
 while bee_list and nectar_deque:
     bee = bee_list[0]
     nectar = nectar_deque[-1]
@@ -56,4 +64,3 @@ if bee_list:
 
 if nectar_deque:
     print(f"Nectar left: {', '.join([str(x) for x in nectar_deque])}")
-
