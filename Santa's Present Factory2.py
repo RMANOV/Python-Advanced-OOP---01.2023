@@ -69,7 +69,7 @@ if materials and magic:
         elif product < 0:
             sum_val = m + ma
             materials.append(sum_val)
-        elif product > 0 and product < 150:
+        elif 0 < product < 150:
             materials.append(m + 15)
 
 if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (
