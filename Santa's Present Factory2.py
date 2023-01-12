@@ -50,7 +50,7 @@ presents = defaultdict(int)
 if materials and magic:
     while materials and magic:
         m = materials.pop()
-        ma = magic.popleft()
+        ma = magic.pop()
         if m == 0 or ma == 0:
             if m == 0:
                 materials.append(m)
