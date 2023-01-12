@@ -63,19 +63,19 @@ while materials and magic:
         materials.append(m + 15)
         magic.popleft()
     elif product > 0 and product in [150, 250, 300, 400]:
-        if product == 150:
+        if product >= 150 and product < 250:
             presents["Doll"] += 1
             materials.pop()
             magic.popleft()
-        elif product == 250:
+        elif product >= 250 and product < 300:
             presents["Wooden train"] += 1
             materials.pop()
             magic.popleft()
-        elif product == 300:
+        elif product >= 300 and product < 400:
             presents["Teddy bear"] += 1
             materials.pop()
             magic.popleft()
-        elif product == 400:
+        elif product >= 400:
             presents["Bicycle"] += 1
             materials.pop()
             magic.popleft()
