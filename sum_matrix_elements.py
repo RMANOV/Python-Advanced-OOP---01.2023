@@ -7,11 +7,28 @@
 
 rows, columns = [int(x) for x in input().split(", ")]
 sum_matrix = 0
+matrix = []
 
 for row in range(rows):
-    matrix = [int(x) for x in input().split(", ")]
-    sum_matrix += sum(matrix)
-    print(matrix)
-
+    matrix.append([int(x) for x in input().split(", ")])
+    sum_matrix += sum(matrix[row])
+    
 
 print(sum_matrix)
+
+# Print the matrix
+# print rows on same line
+for row in matrix:
+row_list = [int(x) for x in row]
+print(row_list)
+
+# rows, columns = [int(x) for x in input().split(", ")]
+# sum_matrix = 0
+
+# for row in range(rows):
+#     matrix = [int(x) for x in input().split(", ")]
+#     sum_matrix += sum(matrix)
+#     print(matrix)
+
+
+# print(sum_matrix)
