@@ -15,12 +15,7 @@ for row in range(rows):
     
 
 print(sum_matrix)
-
-# Print the matrix
-# print rows on same line
-for row in matrix:
-row_list = [int(x) for x in row]
-print(row_list)
+print(*[matrix], sep=", ")
 
 # rows, columns = [int(x) for x in input().split(", ")]
 # sum_matrix = 0
