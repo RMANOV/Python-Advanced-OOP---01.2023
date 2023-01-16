@@ -11,6 +11,20 @@
 
 rows_count, columns_count = [int(x) for x in input().split()]
 matrix = [[int(x) for x in input().split()] for _ in range(rows_count)]
-max_sum = [[sum([matrix[i][j] + matrix[i][j + 1] + matrix[i][j + 2] + matrix[i + 1][j] + matrix[i + 1][j + 1] + matrix[i + 1][j + 2] + matrix[i + 2][j] + matrix[i + 2][j + 1] + matrix[i + 2][j + 2] for j in range(columns_count - 2)]) for i in range(rows_count - 2)]]
-print(f"Sum = {max([max(x) for x in max_sum])}")
-print(*[matrix[i][j:j + 3] for i in range(rows_count - 2) for j in range(columns_count - 2) if sum([matrix[i][j] + matrix[i][j + 1] + matrix[i][j + 2] + matrix[i + 1][j] + matrix[i + 1][j + 1] + matrix[i + 1][j + 2] + matrix[i + 2][j] + matrix[i + 2][j + 1] + matrix[i + 2][j + 2] for j in range(columns_count - 2)]) == max([max(x) for x in max_sum])][0], sep = " ")
+max_sum = 0
+
+for i in range(rows_count - 2):
+    for j in range(columns_count - 2):
+        current_sum = sum([matrix[i][j] + matrix[i][j + 1] + matrix[i][j + 2] + matrix[i + 1][j] + matrix[i + 1][j + 1] + matrix[i + 1][j + 2] + matrix[i + 2][j] + matrix[i + 2][j + 1] + matrix[i + 2][j + 2]])
+        if current_sum > max_sum:
+            max_sum = current_sum
+            max_row = i
+            max_col = j
+print(f"Sum = {max_sum}")
+for i in range(max_row, max_row + 3):
+    print(*matrix[i][max_col:max_col + 3], sep = " ")
+
+
+# max_sum = [[sum([matrix[i][j] + matrix[i][j + 1] + matrix[i][j + 2] + matrix[i + 1][j] + matrix[i + 1][j + 1] + matrix[i + 1][j + 2] + matrix[i + 2][j] + matrix[i + 2][j + 1] + matrix[i + 2][j + 2] for j in range(columns_count - 2)]) for i in range(rows_count - 2)]]
+# print(f"Sum = {max([max(x) for x in max_sum])}")
+# print(*[matrix[i][j:j + 3] for i in range(rows_count - 2) for j in range(columns_count - 2) if sum([matrix[i][j] + matrix[i][j + 1] + matrix[i][j + 2] + matrix[i + 1][j] + matrix[i + 1][j + 1] + matrix[i + 1][j + 2] + matrix[i + 2][j] + matrix[i + 2][j + 1] + matrix[i + 2][j + 2] for j in range(columns_count - 2)]) == max([max(x) for x in max_sum])][0], sep = " ")
