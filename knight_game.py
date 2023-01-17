@@ -17,33 +17,52 @@
 
 rows_count = int(input())
 matrix = [[x for x in input()] for _ in range(rows_count)]
+knight_to_remove = 0
 
-while True:
-    max_sum = { "sum": 0, "row": 0, "col": 0 }
-    for i in range(rows_count):
-        for j in range(rows_count):
-            if matrix[i][j] == "K" and i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
-                current_sum = sum(
-                    [
-                        1 if matrix[i - 2][j - 1] == "K" else 0,
-                        1 if matrix[i - 2][j + 1] == "K" else 0,
-                        1 if matrix[i - 1][j - 2] == "K" else 0,
-                        1 if matrix[i - 1][j + 2] == "K" else 0,
-                        1 if matrix[i + 1][j - 2] == "K" else 0,
-                        1 if matrix[i + 1][j + 2] == "K" else 0,
-                        1 if matrix[i + 2][j - 1] == "K" else 0,
-                        1 if matrix[i + 2][j + 1] == "K" else 0,
-                    ]
-                )
-                if current_sum > max_sum["sum"]:
-                    max_sum["sum"] = current_sum
-                    max_sum["row"] = i
-                    max_sum["col"] = j
-    if max_sum["sum"] == 0:
-        break
-    matrix[max_sum["row"]][max_sum["col"]] = "0"
+for i in range(rows_count):
+    for j in range(rows_count):
+        if matrix[i][j] == "K":
+            if i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
+                if (
+                    matrix[i - 2][j - 1] == "K"
+                    or matrix[i - 2][j + 1] == "K"
+                    or matrix[i - 1][j - 2] == "K"
+                    or matrix[i - 1][j + 2] == "K"
+                    or matrix[i + 1][j - 2] == "K"
+                    or matrix[i + 1][j + 2] == "K"
+                    or matrix[i + 2][j - 1] == "K"
+                    or matrix[i + 2][j + 1] == "K"
+                ):
+                    knight_to_remove += 1
 
-print(sum([sum([1 if x == "K" else 0 for x in row]) for row in matrix]))
+print(knight_to_remove)
+
+# while True:
+#     max_sum = { "sum": 0, "row": 0, "col": 0 }
+#     for i in range(rows_count):
+#         for j in range(rows_count):
+#             if matrix[i][j] == "K" and i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
+#                 current_sum = sum(
+#                     [
+#                         1 if matrix[i - 2][j - 1] == "K" else 0,
+#                         1 if matrix[i - 2][j + 1] == "K" else 0,
+#                         1 if matrix[i - 1][j - 2] == "K" else 0,
+#                         1 if matrix[i - 1][j + 2] == "K" else 0,
+#                         1 if matrix[i + 1][j - 2] == "K" else 0,
+#                         1 if matrix[i + 1][j + 2] == "K" else 0,
+#                         1 if matrix[i + 2][j - 1] == "K" else 0,
+#                         1 if matrix[i + 2][j + 1] == "K" else 0,
+#                     ]
+#                 )
+#                 if current_sum > max_sum["sum"]:
+#                     max_sum["sum"] = current_sum
+#                     max_sum["row"] = i
+#                     max_sum["col"] = j
+#     if max_sum["sum"] == 0:
+#         break
+#     matrix[max_sum["row"]][max_sum["col"]] = "0"
+
+# print(sum([sum([1 if x == "K" else 0 for x in row]) for row in matrix]))
 
 # print(sum([sum([1 if x == "K" else 0 for x in row]) for row in matrix]))
 # print(sum([row.count("K") for row in matrix]))
