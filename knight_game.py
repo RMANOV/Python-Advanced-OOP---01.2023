@@ -15,10 +15,12 @@
 # Output
 # •	Print a single integer with the number of knights that need to be removed.
 
+
 rows_count = int(input())
 matrix = [[x for x in input()] for _ in range(rows_count)]
-knight_to_remove = 0
+removed_knights = 0
 
+# First pass: remove all knights that can attack another knight
 for i in range(rows_count):
     for j in range(rows_count):
         if matrix[i][j] == "K":
@@ -33,9 +35,52 @@ for i in range(rows_count):
                     or matrix[i + 2][j - 1] == "K"
                     or matrix[i + 2][j + 1] == "K"
                 ):
-                    knight_to_remove += 1
+                    matrix[i][j] = "R" # mark as removed
+                    removed_knights += 1
 
-print(knight_to_remove)
+# Second pass: remove all marked knights that are being attacked
+for i in range(rows_count):
+    for j in range(rows_count):
+        if matrix[i][j] == "R":
+            if i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
+                if (
+                    matrix[i - 2][j - 1] == "K"
+                    or matrix[i - 2][j + 1] == "K"
+                    or matrix[i - 1][j - 2] == "K"
+                    or matrix[i - 1][j + 2] == "K"
+                    or matrix[i + 1][j - 2] == "K"
+                    or matrix[i + 1][j + 2] == "K"
+                    or matrix[i + 2][j - 1] == "K"
+                    or matrix[i + 2][j + 1] == "K"
+                ):
+                    matrix[i][j] = "K" # unmark as removed
+                    removed_knights -= 1
+
+print(removed_knights)
+
+
+
+# rows_count = int(input())
+# matrix = [[x for x in input()] for _ in range(rows_count)]
+# knight_to_remove = 0
+
+# for i in range(rows_count):
+#     for j in range(rows_count):
+#         if matrix[i][j] == "K":
+#             if i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
+#                 if (
+#                     matrix[i - 2][j - 1] == "K"
+#                     or matrix[i - 2][j + 1] == "K"
+#                     or matrix[i - 1][j - 2] == "K"
+#                     or matrix[i - 1][j + 2] == "K"
+#                     or matrix[i + 1][j - 2] == "K"
+#                     or matrix[i + 1][j + 2] == "K"
+#                     or matrix[i + 2][j - 1] == "K"
+#                     or matrix[i + 2][j + 1] == "K"
+#                 ):
+#                     knight_to_remove += 1
+
+# print(knight_to_remove)
 
 # while True:
 #     max_sum = { "sum": 0, "row": 0, "col": 0 }
