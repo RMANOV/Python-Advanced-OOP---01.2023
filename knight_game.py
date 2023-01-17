@@ -18,45 +18,69 @@
 
 rows_count = int(input())
 matrix = [[x for x in input()] for _ in range(rows_count)]
-removed_knights = 0
+removed_knight = 0
+all_knights = [[i, j] for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "K" ]
 
-# First pass: remove all knights that can attack another knight
-for i in range(rows_count):
-    for j in range(rows_count):
-        if matrix[i][j] == "K":
-            if i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
-                if (
-                    matrix[i - 2][j - 1] == "K"
-                    or matrix[i - 2][j + 1] == "K"
-                    or matrix[i - 1][j - 2] == "K"
-                    or matrix[i - 1][j + 2] == "K"
-                    or matrix[i + 1][j - 2] == "K"
-                    or matrix[i + 1][j + 2] == "K"
-                    or matrix[i + 2][j - 1] == "K"
-                    or matrix[i + 2][j + 1] == "K"
-                ):
-                    matrix[i][j] = "R" # mark as removed
-                    removed_knights += 1
+while True:
+    max_knights = 0
+    max_knight = []
+    for knight in all_knights:
+        current_knights = 0
+        if knight[0] > 1 and knight[1] > 1 and knight[0] < rows_count - 2 and knight[1] < rows_count - 2:
+            if matrix[knight[0] - 2][knight[1] - 1] == "K":
+                current_knights += 1
+            if matrix[knight[0] - 2][knight[1] + 1] == "K":
+                current_knights += 1
+            if matrix[knight[0] - 1][knight[1] - 2] == "K":
+                current_knights += 1
+            if matrix[knight[0] - 1][knight[1] + 2] == "K":
+                current_knights += 1
+            if matrix[knight[0] + 1][knight[1] - 2] == "K":
+                current_knights += 1
+            if matrix[knight[0] + 1][knight[1] + 2] == "K":
+                current_knights += 1
+            if matrix[knight[0] + 2][knight[1] - 1] == "K":
+                current_knights += 1
+            if matrix[knight[0] + 2][knight[1] + 1] == "K":
+                current_knights += 1
+        if current_knights > max_knights:
+            max_knights = current_knights
+            max_knight = knight
+    if max_knights == 0:
+        break
+    else:
+        matrix[max_knight[0]][max_knight[1]] = "0"
+        removed_knight += 1
+        all_knights.remove(max_knight)
 
-# Second pass: remove all marked knights that are being attacked
-for i in range(rows_count):
-    for j in range(rows_count):
-        if matrix[i][j] == "R":
-            if i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
-                if (
-                    matrix[i - 2][j - 1] == "K"
-                    or matrix[i - 2][j + 1] == "K"
-                    or matrix[i - 1][j - 2] == "K"
-                    or matrix[i - 1][j + 2] == "K"
-                    or matrix[i + 1][j - 2] == "K"
-                    or matrix[i + 1][j + 2] == "K"
-                    or matrix[i + 2][j - 1] == "K"
-                    or matrix[i + 2][j + 1] == "K"
-                ):
-                    matrix[i][j] = "K" # unmark as removed
-                    removed_knights -= 1
+print(removed_knight)
 
-print(removed_knights)
+
+
+
+
+
+
+
+# for i in range(rows_count):
+#     for j in range(rows_count):
+#         if matrix[i][j] == "K":
+#             if i > 1 and j > 1 and i < rows_count - 2 and j < rows_count - 2:
+#                     matrix[i - 2][j - 1] == "K"
+#                     or matrix[i - 2][j + 1] == "K"
+#                     or matrix[i - 1][j - 2] == "K"
+#                     or matrix[i - 1][j + 2] == "K"
+#                     or matrix[i + 1][j - 2] == "K"
+#                     or matrix[i + 1][j + 2] == "K"
+#                     or matrix[i + 2][j - 1] == "K"
+#                     or matrix[i + 2][j + 1] == "K"
+#                 ):
+#                     removed_knights += 1
+
+# print(removed_knights)
+
+
+
 
 
 
