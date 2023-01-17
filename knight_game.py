@@ -21,38 +21,67 @@ matrix = [[x for x in input()] for _ in range(rows_count)]
 all_knights = [[i, j] for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "K" ]
 removed_knights = 0
 
-while True:
+def check_knight(knight):
+    if knight[0] > 1 and knight[1] > 1 and knight[0] < rows_count - 2 and knight[1] < rows_count - 2:
+        if matrix[knight[0] - 2][knight[1] - 1] == "K":
+            return True
+        if matrix[knight[0] - 2][knight[1] + 1] == "K":
+            return True
+        if matrix[knight[0] - 1][knight[1] - 2] == "K":
+            return True
+        if matrix[knight[0] - 1][knight[1] + 2] == "K":
+            return True
+        if matrix[knight[0] + 1][knight[1] - 2] == "K":
+            return True
+        if matrix[knight[0] + 1][knight[1] + 2] == "K":
+            return True
+        if matrix[knight[0] + 2][knight[1] - 1] == "K":
+            return True
+        if matrix[knight[0] + 2][knight[1] + 1] == "K":
+            return True
+    return False
+
+def remove_knight(knight):
+    matrix[knight[0]][knight[1]] = "0"
+    all_knights.remove(knight)
+
+def find_max_knight():
     max_knights = 0
     max_knight = []
     for knight in all_knights:
         current_knights = 0
-        if knight[0] > 1 and knight[1] > 1 and knight[0] < rows_count - 2 and knight[1] < rows_count - 2:
-            if matrix[knight[0] - 2][knight[1] - 1] == "K":
-                current_knights += 1
-            if matrix[knight[0] - 2][knight[1] + 1] == "K":
-                current_knights += 1
-            if matrix[knight[0] - 1][knight[1] - 2] == "K":
-                current_knights += 1
-            if matrix[knight[0] - 1][knight[1] + 2] == "K":
-                current_knights += 1
-            if matrix[knight[0] + 1][knight[1] - 2] == "K":
-                current_knights += 1
-            if matrix[knight[0] + 1][knight[1] + 2] == "K":
-                current_knights += 1
-            if matrix[knight[0] + 2][knight[1] - 1] == "K":
-                current_knights += 1
-            if matrix[knight[0] + 2][knight[1] + 1] == "K":
-                current_knights += 1
-            if current_knights > max_knights:
-                max_knights = current_knights
-                max_knight = knight
-    if max_knights == 0:
-        break
-    else:
-        matrix[max_knight[0]][max_knight[1]] = "0"
+        if check_knight(knight):
+            current_knights += 1
+        if current_knights > max_knights:
+            max_knights = current_knights
+            max_knight = knight
+    return max_knight
+
+def check_knights():
+    for knight in all_knights:
+        if check_knight(knight):
+            return True
+    return False
+
+def remove_knights():
+    global removed_knights
+    while check_knights():
+        max_knight = find_max_knight()
+        remove_knight(max_knight)
         removed_knights += 1
-        all_knights.remove(max_knight)
-print(removed_knights)
+
+def print_result():
+    print(removed_knights)
+
+
+def main():
+    remove_knights()
+    print_result()
+
+if __name__ == "__main__":
+    main()
+
+
 
 
 
