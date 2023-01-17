@@ -23,14 +23,34 @@ all_knights_count = len(all_knights)
 removed_knights = 0
 knight_moves = {(-2,-1),(-2,1),(-1,-2),(-1,2),(1,-2),(1,2),(2,-1),(2,1)}
 
-for knight in all_knights:
-    if knight[0] > 1 and knight[1] > 1 and knight[0] < rows_count - 2 and knight[1] < rows_count - 2:
-        for move in knight_moves:
-            if matrix[knight[0]+move[0]][knight[1]+move[1]] == "K":
-                matrix[knight[0]][knight[1]] = "0"
-                removed_knights += 1
-                break
+while True:
+    max_knights = 0
+    max_knight = []
+    for knight in all_knights:
+        current_knights = 0
+        if knight[0] > 1 and knight[1] > 1 and knight[0] < rows_count - 2 and knight[1] < rows_count - 2:
+            for move in knight_moves:
+                if matrix[knight[0]+move[0]][knight[1]+move[1]] == "K":
+                    current_knights += 1
+            if current_knights > max_knights:
+                max_knights = current_knights
+                max_knight = knight
+    if max_knights == 0:
+        break
+    else:
+        matrix[max_knight[0]][max_knight[1]] = "0"
+        removed_knights += 1
+        all_knights.remove(max_knight)
 print(removed_knights)
+
+# for knight in all_knights:
+#     if knight[0] > 1 and knight[1] > 1 and knight[0] < rows_count - 2 and knight[1] < rows_count - 2:
+#         for move in knight_moves:
+#             if matrix[knight[0]+move[0]][knight[1]+move[1]] == "K":
+#                 matrix[knight[0]][knight[1]] = "0"
+#                 removed_knights += 1
+#                 break
+# print(removed_knights)
 
 
 # while True:
