@@ -38,29 +38,34 @@ up_eggs = 0
 down_eggs = 0
 left_eggs = 0
 right_eggs = 0
-for i in range(bunny[0]-1,-1,-1):
-    if [i,bunny[1]] in eggs:
-        up.append([i,bunny[1]])
+
+while bunny[0] > 0:
+    bunny[0] -= 1
+    if [bunny[0],bunny[1]] in eggs:
+        up.append([bunny[0],bunny[1]])
         up_eggs += 1
-    elif [i,bunny[1]] in traps:
+    elif [bunny[0],bunny[1]] in traps:
         break
-for i in range(bunny[0]+1,rows_count):
-    if [i,bunny[1]] in eggs:
-        down.append([i,bunny[1]])
+while bunny[0] < rows_count - 1:
+    bunny[0] += 1
+    if [bunny[0],bunny[1]] in eggs:
+        down.append([bunny[0],bunny[1]])
         down_eggs += 1
-    elif [i,bunny[1]] in traps:
+    elif [bunny[0],bunny[1]] in traps:
         break
-for i in range(bunny[1]-1,-1,-1):
-    if [bunny[0],i] in eggs:
-        left.append([bunny[0],i])
+while bunny[1] > 0:
+    bunny[1] -= 1
+    if [bunny[0],bunny[1]] in eggs:
+        left.append([bunny[0],bunny[1]])
         left_eggs += 1
-    elif [bunny[0],i] in traps:
+    elif [bunny[0],bunny[1]] in traps:
         break
-for i in range(bunny[1]+1,rows_count):
-    if [bunny[0],i] in eggs:
-        right.append([bunny[0],i])
+while bunny[1] < rows_count - 1:
+    bunny[1] += 1
+    if [bunny[0],bunny[1]] in eggs:
+        right.append([bunny[0],bunny[1]])
         right_eggs += 1
-    elif [bunny[0],i] in traps:
+    elif [bunny[0],bunny[1]] in traps:
         break
 if up_eggs >= down_eggs and up_eggs >= left_eggs and up_eggs >= right_eggs:
     print("up")
@@ -78,4 +83,48 @@ elif right_eggs >= up_eggs and right_eggs >= down_eggs and right_eggs >= left_eg
     print("right")
     print(*right, sep = "\n")
     # print(right_eggs)
+
 print(up_eggs + down_eggs + left_eggs + right_eggs)
+
+
+# for i in range(bunny[0]-1,-1,-1):
+#     if [i,bunny[1]] in eggs:
+#         up.append([i,bunny[1]])
+#         up_eggs += 1
+#     elif [i,bunny[1]] in traps:
+#         break
+# for i in range(bunny[0]+1,rows_count):
+#     if [i,bunny[1]] in eggs:
+#         down.append([i,bunny[1]])
+#         down_eggs += 1
+#     elif [i,bunny[1]] in traps:
+#         break
+# for i in range(bunny[1]-1,-1,-1):
+#     if [bunny[0],i] in eggs:
+#         left.append([bunny[0],i])
+#         left_eggs += 1
+#     elif [bunny[0],i] in traps:
+#         break
+# for i in range(bunny[1]+1,rows_count):
+#     if [bunny[0],i] in eggs:
+#         right.append([bunny[0],i])
+#         right_eggs += 1
+#     elif [bunny[0],i] in traps:
+#         break
+# if up_eggs >= down_eggs and up_eggs >= left_eggs and up_eggs >= right_eggs:
+#     print("up")
+#     print(*up, sep = "\n")
+#     # print(up_eggs)
+# elif down_eggs >= up_eggs and down_eggs >= left_eggs and down_eggs >= right_eggs:
+#     print("down")
+#     print(*down, sep = "\n")
+#     # print(down_eggs)
+# elif left_eggs >= up_eggs and left_eggs >= down_eggs and left_eggs >= right_eggs:
+#     print("left")
+#     print(*left, sep = "\n")
+#     # print(left_eggs)
+# elif right_eggs >= up_eggs and right_eggs >= down_eggs and right_eggs >= left_eggs:
+#     print("right")
+#     print(*right, sep = "\n")
+#     # print(right_eggs)
+# print(up_eggs + down_eggs + left_eggs + right_eggs)
