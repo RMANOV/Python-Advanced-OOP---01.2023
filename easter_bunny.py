@@ -19,72 +19,43 @@
 
 rows_count = int(input())
 matrix = [[x for x in input().split()] for _ in range(rows_count)]
-bunny = []
-eggs = []
-traps = []
-for i in range(rows_count):
-    for j in range(rows_count):
-        if matrix[i][j] == "B":
-            bunny = [i,j]
-        elif matrix[i][j] == "X":
-            traps.append([i,j])
-        elif matrix[i][j].isdigit():
-            eggs.append([i,j])
-up = []
-down = []
-left = []
-right = []
-up_eggs = 0
-down_eggs = 0
-left_eggs = 0
-right_eggs = 0
+bunny = [[i,j] for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "B"][0]
+eggs_up = [[i,j] for i in range(bunny[0]-1,-1,-1) for j in range(rows_count) if matrix[i][j] == "X"]
+eggs_down = [[i,j] for i in range(bunny[0]+1,rows_count) for j in range(rows_count) if matrix[i][j] == "X"]
+eggs_left = [[i,j] for i in range(rows_count) for j in range(bunny[1]-1,-1,-1) if matrix[i][j] == "X"]
+eggs_rigth = [[i,j] for i in range(rows_count) for j in range(bunny[1]+1,rows_count) if matrix[i][j] == "X"]
 
-while bunny[0] > 0:
-    bunny[0] -= 1
-    if [bunny[0],bunny[1]] in eggs:
-        up.append([bunny[0],bunny[1]])
-        up_eggs += 1
-    elif [bunny[0],bunny[1]] in traps:
-        break
-while bunny[0] < rows_count - 1:
-    bunny[0] += 1
-    if [bunny[0],bunny[1]] in eggs:
-        down.append([bunny[0],bunny[1]])
-        down_eggs += 1
-    elif [bunny[0],bunny[1]] in traps:
-        break
-while bunny[1] > 0:
-    bunny[1] -= 1
-    if [bunny[0],bunny[1]] in eggs:
-        left.append([bunny[0],bunny[1]])
-        left_eggs += 1
-    elif [bunny[0],bunny[1]] in traps:
-        break
-while bunny[1] < rows_count - 1:
-    bunny[1] += 1
-    if [bunny[0],bunny[1]] in eggs:
-        right.append([bunny[0],bunny[1]])
-        right_eggs += 1
-    elif [bunny[0],bunny[1]] in traps:
-        break
-if up_eggs >= down_eggs and up_eggs >= left_eggs and up_eggs >= right_eggs:
+# in wich direction we have the most eggs
+max_eggs = max(len(eggs_up), len(eggs_down), len(eggs_left), len(eggs_rigth))
+
+# print the direction
+if max_eggs == len(eggs_up):
     print("up")
-    print(*up, sep = "\n")
-    # print(up_eggs)
-elif down_eggs >= up_eggs and down_eggs >= left_eggs and down_eggs >= right_eggs:
+    print(*eggs_up, sep = "\n")
+    print(len(eggs_up))
+elif max_eggs == len(eggs_down):
     print("down")
-    print(*down, sep = "\n")
-    # print(down_eggs)
-elif left_eggs >= up_eggs and left_eggs >= down_eggs and left_eggs >= right_eggs:
+    print(*eggs_down, sep = "\n")
+    print(len(eggs_down))
+elif max_eggs == len(eggs_left):
     print("left")
-    print(*left, sep = "\n")
-    # print(left_eggs)
-elif right_eggs >= up_eggs and right_eggs >= down_eggs and right_eggs >= left_eggs:
+    print(*eggs_left, sep = "\n")
+    print(len(eggs_left))
+elif max_eggs == len(eggs_rigth):
     print("right")
-    print(*right, sep = "\n")
-    # print(right_eggs)
+    print(*eggs_rigth, sep = "\n")
+    print(len(eggs_rigth))
 
-print(up_eggs + down_eggs + left_eggs + right_eggs)
+
+
+
+
+
+
+
+
+
+
 
 
 # for i in range(bunny[0]-1,-1,-1):
