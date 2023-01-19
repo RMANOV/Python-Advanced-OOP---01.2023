@@ -3,7 +3,7 @@
 # On the first line, you will be given a number representing the size of the field. 
 # On the following few lines, you will be given a field with:
 # •	One bunny - randomly placed in it and marked with the symbol "B"
-# •	Number of eggs placed at different positions of the field and traps marked with "X"
+# •	Number of eggs placed at different positions of the field and traps marked with the symbol "X"
 # Your job is to determine the direction in which the bunny should go to collect the maximum number of eggs. 
 # The directions that should be considered as possible are up, down, left, and right. 
 # If you reach a trap while checking some of the directions, you should not consider the fields after the trap in this direction. 
@@ -20,31 +20,99 @@
 rows_count = int(input())
 matrix = [[x for x in input().split()] for _ in range(rows_count)]
 bunny = [[i,j] for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "B"][0]
-eggs_up = [[i,j] for i in range(bunny[0]-1,-1,-1) for j in range(rows_count) if matrix[i][j] == "X"]
-eggs_down = [[i,j] for i in range(bunny[0]+1,rows_count) for j in range(rows_count) if matrix[i][j] == "X"]
-eggs_left = [[i,j] for i in range(rows_count) for j in range(bunny[1]-1,-1,-1) if matrix[i][j] == "X"]
-eggs_rigth = [[i,j] for i in range(rows_count) for j in range(bunny[1]+1,rows_count) if matrix[i][j] == "X"]
+all_eggs = [int(matrix[i][j]) for i in range(rows_count) for j in range(rows_count) if matrix[i][j] != "X" and matrix[i][j] != "B"]
 
-# in wich direction we have the most eggs
-max_eggs = max(len(eggs_up), len(eggs_down), len(eggs_left), len(eggs_rigth))
+if sum(all_eggs) <= 0:
+    exit()
 
-# print the direction
-if max_eggs == len(eggs_up):
+# in wich direction we have the most eggs from the bunny - we sum the eggs in the direction before the trap
+eggs_up =[int(matrix[i][bunny[1]]) for i in range(bunny[0]-1,-1,-1) if matrix[i][bunny[1]] != "X"]
+eggs_up_indexes = [[i,bunny[1]] for i in range(bunny[0]-1,-1,-1) if matrix[i][bunny[1]] != "X" ]
+
+eggs_down =[int(matrix[i][bunny[1]]) for i in range(bunny[0]+1,rows_count) if matrix[i][bunny[1]] != "X"]
+eggs_down_indexes = [[i,bunny[1]] for i in range(bunny[0]+1,rows_count) if matrix[i][bunny[1]] != "X"]
+
+eggs_left =[int(matrix[bunny[0]][i]) for i in range(bunny[1]-1,-1,-1) if matrix[bunny[0]][i] != "X"]
+eggs_left_indexes = [[bunny[0],i] for i in range(bunny[1]-1,-1,-1) if matrix[bunny[0]][i] != "X" ]
+
+eggs_rigth =[int(matrix[bunny[0]][i]) for i in range(bunny[1]+1,rows_count) if matrix[bunny[0]][i] != "X"]
+eggs_right_indexes = [[bunny[0],i] for i in range(bunny[1]+1,rows_count) if matrix[bunny[0]][i] != "X"]
+
+
+
+max_eggs = max(sum(eggs_up), sum(eggs_down), sum(eggs_left), sum(eggs_rigth))
+
+if max_eggs == sum(eggs_up):
     print("up")
-    print(*eggs_up, sep = "\n")
-    print(len(eggs_up))
-elif max_eggs == len(eggs_down):
+    print(*eggs_up_indexes, sep = "\n")
+    # print(len(eggs_up))
+elif max_eggs == sum(eggs_down):
     print("down")
-    print(*eggs_down, sep = "\n")
-    print(len(eggs_down))
-elif max_eggs == len(eggs_left):
+    print(*eggs_down_indexes, sep = "\n")
+    # print(len(eggs_down))
+elif max_eggs == sum(eggs_left):
     print("left")
-    print(*eggs_left, sep = "\n")
-    print(len(eggs_left))
-elif max_eggs == len(eggs_rigth):
+    print(*eggs_left_indexes, sep = "\n")
+    # print(len(eggs_left))
+elif max_eggs == sum(eggs_rigth):
     print("right")
-    print(*eggs_rigth, sep = "\n")
-    print(len(eggs_rigth))
+    print(*eggs_right_indexes, sep = "\n")
+    # print(len(eggs_rigth))
+
+print(max_eggs)
+
+
+# # eggs_up = [[i,j] for i in range(bunny[0]-1,-1,-1) for j in range(rows_count) if matrix[i][j] == "X"]
+# # eggs_down = [[i,j] for i in range(bunny[0]+1,rows_count) for j in range(rows_count) if matrix[i][j] == "X"]
+# # eggs_left = [[i,j] for i in range(rows_count) for j in range(bunny[1]-1,-1,-1) if matrix[i][j] == "X"]
+# # eggs_rigth = [[i,j] for i in range(rows_count) for j in range(bunny[1]+1,rows_count) if matrix[i][j] == "X"]
+
+# eggs_up = []
+# for i in range(bunny[0]-1,-1,-1):
+#     if matrix[i][bunny[1]] == "X":
+#         eggs_up.append([i,bunny[1]])
+#     elif matrix[i][bunny[1]] == "X":
+#         break
+# eggs_down = []
+# for i in range(bunny[0]+1,rows_count):
+#     if matrix[i][bunny[1]] == "X":
+#         eggs_down.append([i,bunny[1]])
+#     elif matrix[i][bunny[1]] == "X":
+#         break
+# eggs_left = []
+# for i in range(bunny[1]-1,-1,-1):
+#     if matrix[bunny[0]][i] == "X":
+#         eggs_left.append([bunny[0],i])
+#     elif matrix[bunny[0]][i] == "X":
+#         break
+# eggs_rigth = []
+# for i in range(bunny[1]+1,rows_count):
+#     if matrix[bunny[0]][i] == "X":
+#         eggs_rigth.append([bunny[0],i])
+#     elif matrix[bunny[0]][i] == "X":
+#         break
+
+# # in wich direction we have the most eggs
+# max_eggs = max(len(eggs_up), len(eggs_down), len(eggs_left), len(eggs_rigth))
+
+# # print the direction
+# if max_eggs == len(eggs_up):
+#     print("up")
+#     print(*eggs_up, sep = "\n")
+#     # print(len(eggs_up))
+# elif max_eggs == len(eggs_down):
+#     print("down")
+#     print(*eggs_down, sep = "\n")
+#     # print(len(eggs_down))
+# elif max_eggs == len(eggs_left):
+#     print("left")
+#     print(*eggs_left, sep = "\n")
+#     # print(len(eggs_left))
+# elif max_eggs == len(eggs_rigth):
+#     print("right")
+#     print(*eggs_rigth, sep = "\n")
+#     # print(len(eggs_rigth))
+# print(eggs_up + eggs_down + eggs_left + eggs_rigth)
 
 
 
