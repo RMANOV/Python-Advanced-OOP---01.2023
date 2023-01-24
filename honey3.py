@@ -33,14 +33,15 @@
 
 from collections import deque
 
-bees = deque([int(x) for x in input().split()])
-nectar = deque([int(x) for x in input().split()])
+bees = deque(int(x) for x in input().split())
+nectar = deque(int(x) for x in input().split())
 symbols_deque = deque(input().split())
 total_honey = 0
-symbols = {"+": lambda x, y: x + y,
-           "-": lambda x, y: x - y,
-           "*": lambda x, y: x * y,
-           "/": lambda x, y: x / y if y != 0 else 0}
+
+symbols = {"*": lambda x, y: x * y,
+           "/": lambda x, y: x / y if y != 0 else 0,
+           "+": lambda x, y: x + y,
+           "-": lambda x, y: x - y}
 
 while bees and nectar:
     current_bee = bees.popleft()
@@ -49,12 +50,16 @@ while bees and nectar:
     if current_nectar < current_bee:
         bees.appendleft(current_bee)
         continue
-    total_honey += symbols[symbols_deque.popleft()](current_bee, current_nectar)
-
-    if not bees or not nectar:
-        break
-
+    # if curr_nectar < curr_bee:
+    #     bees.appendleft(curr_bee)
+    # elif curr_nectar > curr_bee:
+    #     total_honey += abs(operations[symbols.popleft()](curr_bee, curr_nectar))
+    elif current_nectar > current_bee:
+        total_honey += abs(symbols[symbols_deque.popleft()](current_bee, current_nectar))
     total_honey = max(total_honey, 0)
+
+    # if not bees or not nectar:
+    #     break
 
 if total_honey:
     print(f"Total honey made: {total_honey}")
