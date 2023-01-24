@@ -54,8 +54,11 @@ while bees and nectar:
     #     bees.appendleft(curr_bee)
     # elif curr_nectar > curr_bee:
     #     total_honey += abs(operations[symbols.popleft()](curr_bee, curr_nectar))
-    elif current_nectar > current_bee:
-        total_honey += abs(symbols[symbols_deque.popleft()](current_bee, current_nectar))
+    elif current_nectar >= current_bee:
+        # total_honey += abs(symbols[symbols_deque.popleft()](current_bee, current_nectar))
+        # total_honey += abs(int(eval(f"{current_bee} {symbols_deque.popleft()} {current_nectar}")))
+        if symbols_deque:
+            total_honey += abs(symbols[symbols_deque.popleft()](current_bee, current_nectar))
     total_honey = max(total_honey, 0)
 
     # if not bees or not nectar:

@@ -37,11 +37,11 @@
 # ...
 # {toy_nameN}: {amount}"
 
-from collections import deque, defaultdict
+from collections import deque
 
 materials = deque([int(x) for x in input().split()])
 magic = deque([int(x) for x in input().split()])
-presents = defaultdict(int)
+presents = {"Doll": 0, "Wooden train": 0, "Teddy bear": 0, "Bicycle": 0}
 
 while materials and magic:
     m = materials.pop()
@@ -80,21 +80,75 @@ while materials and magic:
             materials.pop()
             magic.popleft()
 
-if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (
-    presents["Teddy bear"] >= 1 and presents["Bicycle"] >= 1
-):
-    print("The presents are crafted! Merry Christmas!")
-else:
-    print("No presents this Christmas!")
+print("The presents are crafted! Merry Christmas!" if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (presents["Teddy bear"] >= 1 and presents["Bicycle"] >= 1) else "No presents this Christmas!")
 
 if materials:
-    print(f"Materials left: {', '.join(map(str, materials))}")
-
+    print(f"Materials left: {', '.join([str(x) for x in reversed(materials)])}")
 if magic:
-    print(f"Magic left: {', '.join(map(str, magic))}")
-
+    print(f"Magic left: {', '.join([str(x) for x in magic])}")
 for k, v in sorted(presents.items()):
-    print(f"{k}: {v}")
+    if v > 0:
+        print(f"{k}: {v}")
+
+
+# from collections import deque, defaultdict
+
+# materials = deque([int(x) for x in input().split()])
+# magic = deque([int(x) for x in input().split()])
+# presents = defaultdict(int)
+
+# while materials and magic:
+#     m = materials.pop()
+#     ma = magic.popleft()
+#     if m <= 0 or ma <= 0:
+#         if m <= 0:
+#             materials.append(m)
+#         if ma <= 0:
+#             magic.append(ma)
+#         continue
+#     product = m * ma
+#     if product < 0:
+#         sum_val = m + ma
+#         materials.append(sum_val)
+#         # remove both
+#         magic.popleft()
+#         materials.pop()
+#     elif product > 0 and product not in [150, 250, 300, 400]:
+#         materials.append(m + 15)
+#         magic.popleft()
+#     elif product > 0 and product in [150, 250, 300, 400]:
+#         if product >= 150 and product < 250:
+#             presents["Doll"] += 1
+#             materials.pop()
+#             magic.popleft()
+#         elif product >= 250 and product < 300:
+#             presents["Wooden train"] += 1
+#             materials.pop()
+#             magic.popleft()
+#         elif product >= 300 and product < 400:
+#             presents["Teddy bear"] += 1
+#             materials.pop()
+#             magic.popleft()
+#         elif product >= 400:
+#             presents["Bicycle"] += 1
+#             materials.pop()
+#             magic.popleft()
+
+# if (presents["Doll"] >= 1 and presents["Wooden train"] >= 1) or (
+#     presents["Teddy bear"] >= 1 and presents["Bicycle"] >= 1
+# ):
+#     print("The presents are crafted! Merry Christmas!")
+# else:
+#     print("No presents this Christmas!")
+
+# if materials:
+#     print(f"Materials left: {', '.join(map(str, materials))}")
+
+# if magic:
+#     print(f"Magic left: {', '.join(map(str, magic))}")
+
+# for k, v in sorted(presents.items()):
+#     print(f"{k}: {v}")
 
 
 # while materials and magic:
