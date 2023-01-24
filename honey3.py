@@ -33,34 +33,73 @@
 
 from collections import deque
 
-bee_list = [int(x) for x in input().split()]
-nectar_deque = deque([int(x) for x in input().split()])
-symbol_list = input().split()
+bees = deque([int(x) for x in input().split()])
+nectar = deque([int(x) for x in input().split()])
 total_honey = 0
+symbols = {"+": lambda x, y: x + y,
+           "-": lambda x, y: x - y,
+           "*": lambda x, y: x * y,
+           "/": lambda x, y: x / y}
 
-
-while bee_list and nectar_deque:
-    bee = bee_list[0]
-    nectar = nectar_deque[-1]
-    if bee <= nectar:
-        total_honey += abs(eval(f"{bee} {symbol_list[0]} {nectar}"))
-        total_honey = max(total_honey, 0)
-        bee_list.pop(0)
-        nectar_deque.pop()
-        symbol_list.pop(0)
+while bees and nectar:
+    current_bee = bees.popleft()
+    current_nectar = nectar.pop()
+    if current_bee <= current_nectar:
+        # total_honey += symbols[input().split()[0]](current_bee, current_nectar)
+        # total_honey += abs(eval(f"{current_bee} {input().split()[0]} {current_nectar}"))
+        # total_honey += abs(symbols[input().split()[0]](current_bee, current_nectar))
+        total_honey += abs(symbols[input().split()[0]](current_bee, current_nectar))
     else:
-        nectar_deque.pop()
+        bees.appendleft(current_bee)
 
-    if not nectar_deque or not bee_list or not symbol_list:
+    if not bees or not nectar:
         break
+
+    total_honey = max(total_honey, 0)
 
 if total_honey:
     print(f"Total honey made: {total_honey}")
-else:
-    print("Total honey made: 0")
 
-if bee_list:
-    print(f"Bees left: {', '.join([str(x) for x in bee_list])}")
+if bees:
+    print(f"Bees left: {', '.join([str(x) for x in bees])}")
 
-if nectar_deque:
-    print(f"Nectar left: {', '.join([str(x) for x in nectar_deque])}")
+if nectar:
+    print(f"Nectar left: {', '.join([str(x) for x in nectar])}")
+
+
+
+
+# from collections import deque
+
+# bee_list = [int(x) for x in input().split()]
+# nectar_deque = deque([int(x) for x in input().split()])
+# symbol_list = input().split()
+# total_honey = 0
+
+
+# while bee_list and nectar_deque:
+#     bee = bee_list[0]
+#     nectar = nectar_deque[-1]
+#     if bee <= nectar:
+#         total_honey += abs(eval(f"{bee} {symbol_list[0]} {nectar}"))
+#         total_honey = max(total_honey, 0)
+#         bee_list.pop(0)
+#         nectar_deque.pop()
+#         symbol_list.pop(0)
+#     else:
+#         nectar_deque.pop()
+
+#     if not nectar_deque or not bee_list or not symbol_list:
+#         break
+
+
+# if total_honey:
+#     print(f"Total honey made: {total_honey}")
+# else:
+#     print("Total honey made: 0")
+
+# if bee_list:
+#     print(f"Bees left: {', '.join([str(x) for x in bee_list])}")
+
+# if nectar_deque:
+#     print(f"Nectar left: {', '.join([str(x) for x in nectar_deque])}")
