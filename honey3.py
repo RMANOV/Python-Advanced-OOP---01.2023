@@ -35,22 +35,21 @@ from collections import deque
 
 bees = deque([int(x) for x in input().split()])
 nectar = deque([int(x) for x in input().split()])
+symbols_deque = deque(input().split())
 total_honey = 0
 symbols = {"+": lambda x, y: x + y,
            "-": lambda x, y: x - y,
            "*": lambda x, y: x * y,
-           "/": lambda x, y: x / y}
+           "/": lambda x, y: x / y if y != 0 else 0}
 
 while bees and nectar:
     current_bee = bees.popleft()
     current_nectar = nectar.pop()
-    if current_bee <= current_nectar:
-        # total_honey += symbols[input().split()[0]](current_bee, current_nectar)
-        # total_honey += abs(eval(f"{current_bee} {input().split()[0]} {current_nectar}"))
-        # total_honey += abs(symbols[input().split()[0]](current_bee, current_nectar))
-        total_honey += abs(symbols[input().split()[0]](current_bee, current_nectar))
-    else:
+    
+    if current_nectar < current_bee:
         bees.appendleft(current_bee)
+        continue
+    total_honey += symbols[symbols_deque.popleft()](current_bee, current_nectar)
 
     if not bees or not nectar:
         break
