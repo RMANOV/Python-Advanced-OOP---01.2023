@@ -28,6 +28,7 @@ rows_count = int(input())
 matrix = [[x for x in input().split()] for _ in range(rows_count)]
 colected_tea = 0
 directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
+alice_position = (0, 0)
 
 def print_matrix():
     for row in matrix:
@@ -35,6 +36,11 @@ def print_matrix():
 
 while colected_tea < 10:
     command = input()
+    # if on the new alice position is "*" or "R" or out of the matrix, print and exit
+    if matrix[alice_position[0]][alice_position[1]] == "*" or matrix[alice_position[0]][alice_position[1]] == "R":
+        print("Alice didn't make it to the tea party.")
+        print_matrix()
+        exit()
     for i, row in enumerate(matrix):
         for j, item in enumerate(row):
             if item == "A":
@@ -47,7 +53,8 @@ while colected_tea < 10:
         break
     new_i = alice_position[0] + directions[command][0]
     new_j = alice_position[1] + directions[command][1]
-    if new_i < 0 or new_i >= rows_count or new_j < 0 or new_j >= rows_count:
+    # if new_i < 0 or new_i >= rows_count or new_j < 0 or new_j >= rows_count:
+    if not (0 <= new_i < rows_count and 0 <= new_j < rows_count):
         matrix[alice_position[0]][alice_position[1]] = "*"
         print("Alice didn't make it to the tea party.")
         print_matrix()
@@ -67,6 +74,11 @@ while colected_tea < 10:
             matrix[alice_position[0]][alice_position[1]] = "*"
             matrix[new_i][new_j] = "A"
             alice_position = [new_i, new_j]
+    if command == "up" and new_i < 0:
+        matrix[alice_position[0]][alice_position[1]] = "*"
+        print("Alice didn't make it to the tea party.")
+        print_matrix()
+        exit()
 
 matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
 print("She did it! She went to the party.")
