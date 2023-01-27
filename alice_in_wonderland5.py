@@ -29,22 +29,22 @@ matrix = [[x for x in input().split()] for _ in range(rows_count)]
 colected_tea = 0
 directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
 
-
 def print_matrix():
     for row in matrix:
         print(*row, sep=" ")
 
 while colected_tea < 10:
     command = input()
-    # update alice position, check if it is valid and remove the old position
-    # alice_position = next(((i, j) for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "A"), None)
-    alice_position = next(((i, j) for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "A"), None)
-    if alice_position is None:
-        print("Alice didn't make it to the tea party.")
-        print_matrix()
-        exit()
-    else:
-        matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
+    for i, row in enumerate(matrix):
+        for j, item in enumerate(row):
+            if item == "A":
+                alice_position = (i, j)
+                # remove old position
+                matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
+                break
+        else:
+            continue
+        break
     new_i = alice_position[0] + directions[command][0]
     new_j = alice_position[1] + directions[command][1]
     if new_i < 0 or new_i >= rows_count or new_j < 0 or new_j >= rows_count:
@@ -68,11 +68,71 @@ while colected_tea < 10:
             matrix[new_i][new_j] = "A"
             alice_position = [new_i, new_j]
 
-# replace alice position with *
-alice_position = matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
-
+matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
 print("She did it! She went to the party.")
 print_matrix()
+
+
+# rows_count = int(input())
+# matrix = [[x for x in input().split()] for _ in range(rows_count)]
+# colected_tea = 0
+# directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
+
+
+# def print_matrix():
+#     for row in matrix:
+#         print(*row, sep=" ")
+
+
+# while colected_tea < 10:
+#     command = input()
+#     # update alice position, check if it is valid and remove the old position
+#     # alice_position = next(((i, j) for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "A"), None)
+#     alice_position = next(
+#         (
+#             (i, j)
+#             for i in range(rows_count)
+#             for j in range(rows_count)
+#             if matrix[i][j] == "A"
+#         ),
+#         None,
+#     )
+#     if alice_position is None:
+#         print("Alice didn't make it to the tea party.")
+#         print_matrix()
+#         exit()
+#     else:
+#         matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
+#     new_i = alice_position[0] + directions[command][0]
+#     new_j = alice_position[1] + directions[command][1]
+#     if new_i < 0 or new_i >= rows_count or new_j < 0 or new_j >= rows_count:
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         print("Alice didn't make it to the tea party.")
+#         print_matrix()
+#         exit()
+#     elif matrix[new_i][new_j] == "R":
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         print("Alice didn't make it to the tea party.")
+#         print_matrix()
+#         exit()
+#     elif matrix[new_i][new_j] == ".":
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         matrix[new_i][new_j] = "A"
+#         alice_position = [new_i, new_j]
+#     else:
+#         if matrix[new_i][new_j].isdigit():
+#             colected_tea += int(matrix[new_i][new_j])
+#             matrix[alice_position[0]][alice_position[1]] = "*"
+#             matrix[new_i][new_j] = "A"
+#             alice_position = [new_i, new_j]
+
+# # replace alice position with *
+# alice_position = matrix[alice_position[0]][
+#     alice_position[1]
+# ] = "*"  # remove old position
+
+# print("She did it! She went to the party.")
+# print_matrix()
 
 
 # rows_count = int(input())
@@ -114,11 +174,6 @@ print_matrix()
 # print_matrix()
 
 
-
-
-
-
-
 # rows_count = int(input())
 # matrix = [[x for x in input().split()] for _ in range(rows_count)]
 # colected_tea = 0
@@ -158,14 +213,6 @@ print_matrix()
 # print("She did it! She went to the party.")
 # for row in matrix:
 #     print(*row, sep=" ")
-
-
-
-
-
-
-
-
 
 
 # for i in range(rows_count):
