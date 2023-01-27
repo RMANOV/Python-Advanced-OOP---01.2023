@@ -25,50 +25,95 @@ max_collected_eggs = 0
 max_collected_eggs_direction = ""
 max_collected_eggs_indexes = []
 
+for move in bunny_movings:
+    collected_eggs = 0
+    collected_eggs_indexes = []
+    current_position = [bunny_position[0][0], bunny_position[0][1]]
+    while True:
+        if (
+            current_position[0] + move[0] >= 0
+            and current_position[0] + move[0] < rows_count
+            and current_position[1] + move[1] >= 0
+            and current_position[1] + move[1] < rows_count
+        ):
+            if matrix[current_position[0] + move[0]][current_position[1] + move[1]] != "X":
+                if matrix[current_position[0] + move[0]][current_position[1] + move[1]] != "B":
+                    collected_eggs += int(matrix[current_position[0] + move[0]][current_position[1] + move[1]])
+                    collected_eggs_indexes.append([current_position[0] + move[0], current_position[1] + move[1]])
+                    current_position = [current_position[0] + move[0], current_position[1] + move[1]]
+                else:
+                    break
+            else:
+                break
+        else:
+            break
+    if collected_eggs > max_collected_eggs:
+        max_collected_eggs = collected_eggs
+        max_collected_eggs_direction = move
+        max_collected_eggs_indexes = collected_eggs_indexes
+
+
+
+# print up, down, left, right if max_collected_egg is apropriate
+for move in bunny_movings:
+    if move == max_collected_eggs_direction:
+        if move == (-1, 0):
+            print("up")
+        elif move == (1, 0):
+            print("down")
+        elif move == (0, -1):
+            print("left")
+        elif move == (0, 1):
+            print("right")
+
+
+print(*max_collected_eggs_indexes, sep="\n")
+print(max_collected_eggs)
+
 # for i in range(rows_count):
 #     for j in range(rows_count):
 #         if matrix[i][j] == "B":
 #             bunny_position.append([i, j])
 
-while True:
-    max_collected_eggs = 0
-    max_collected_eggs_direction = ""
-    max_collected_eggs_indexes = []
-    for move in bunny_movings:
-        collected_eggs = 0
-        collected_eggs_indexes = []
-        current_position = [bunny_position[0][0], bunny_position[0][1]]
-        while True:
-            if (
-                current_position[0] + move[0] >= 0
-                and current_position[0] + move[0] < rows_count
-                and current_position[1] + move[1] >= 0
-                and current_position[1] + move[1] < rows_count
-            ):
-                if matrix[current_position[0] + move[0]][current_position[1] + move[1]] != "X":
-                    if matrix[current_position[0] + move[0]][current_position[1] + move[1]] != "B":
-                        collected_eggs += int(matrix[current_position[0] + move[0]][current_position[1] + move[1]])
-                        collected_eggs_indexes.append([current_position[0] + move[0], current_position[1] + move[1]])
-                        current_position = [current_position[0] + move[0], current_position[1] + move[1]]
-                else:
-                    break
-            else:
-                break
-        if collected_eggs > max_collected_eggs:
-            max_collected_eggs = collected_eggs
-            max_collected_eggs_direction = move
-            max_collected_eggs_indexes = collected_eggs_indexes
-    if max_collected_eggs == 0:
-        break
-    else:
-        for index in max_collected_eggs_indexes:
-            matrix[index[0]][index[1]] = "0"
-        bunny_position[0][0] += max_collected_eggs_direction[0]
-        bunny_position[0][1] += max_collected_eggs_direction[1]
+# while True:
+#     max_collected_eggs = 0
+#     max_collected_eggs_direction = ""
+#     max_collected_eggs_indexes = []
+#     for move in bunny_movings:
+#         collected_eggs = 0
+#         collected_eggs_indexes = []
+#         current_position = [bunny_position[0][0], bunny_position[0][1]]
+#         while True:
+#             if (
+#                 current_position[0] + move[0] >= 0
+#                 and current_position[0] + move[0] < rows_count
+#                 and current_position[1] + move[1] >= 0
+#                 and current_position[1] + move[1] < rows_count
+#             ):
+#                 if matrix[current_position[0] + move[0]][current_position[1] + move[1]] != "X":
+#                     if matrix[current_position[0] + move[0]][current_position[1] + move[1]] != "B":
+#                         collected_eggs += int(matrix[current_position[0] + move[0]][current_position[1] + move[1]])
+#                         collected_eggs_indexes.append([current_position[0] + move[0], current_position[1] + move[1]])
+#                         current_position = [current_position[0] + move[0], current_position[1] + move[1]]
+#                 else:
+#                     break
+#             else:
+#                 break
+#         if collected_eggs > max_collected_eggs:
+#             max_collected_eggs = collected_eggs
+#             max_collected_eggs_direction = move
+#             max_collected_eggs_indexes = collected_eggs_indexes
+#     if max_collected_eggs == 0:
+#         break
+#     else:
+#         for index in max_collected_eggs_indexes:
+#             matrix[index[0]][index[1]] = "0"
+#         bunny_position[0][0] += max_collected_eggs_direction[0]
+#         bunny_position[0][1] += max_collected_eggs_direction[1]
 
-print(max_collected_eggs_direction)
-print(*max_collected_eggs_indexes, sep="\n")
-print(max_collected_eggs)
+# print(max_collected_eggs_direction)
+# print(*max_collected_eggs_indexes, sep="\n")
+# print(max_collected_eggs)
 
 
 
