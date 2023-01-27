@@ -30,6 +30,8 @@ matrix = [[x for x in input().split()] for _ in range(rows_count)]
 colected_tea = 0
 directions = { "up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1) }
 
+
+
 while colected_tea < 10:
     for i in range(rows_count):
         for j in range(rows_count):
