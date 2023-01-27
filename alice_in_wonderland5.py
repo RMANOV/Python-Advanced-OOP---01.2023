@@ -34,55 +34,144 @@ def print_matrix():
     for row in matrix:
         print(*row, sep=" ")
 
-while colected_tea < 10:
-    command = input()
-    # if on the new alice position is "*" or "R" or out of the matrix, print and exit
-    if matrix[alice_position[0]][alice_position[1]] == "*" or matrix[alice_position[0]][alice_position[1]] == "R":
+def is_valid_position(i, j):
+    return 0 <= i < rows_count and 0 <= j < rows_count
+
+def get_new_position(i, j, command):
+    new_i = i + directions[command][0]
+    new_j = j + directions[command][1]
+    return new_i, new_j
+
+def is_rabbit_hole(i, j):
+    return matrix[i][j] == "R"
+
+def is_empty_position(i, j):
+    return matrix[i][j] == "."
+
+def is_tea_bag(i, j):
+    return matrix[i][j].isdigit()
+
+def collect_tea(i, j):
+    global colected_tea
+    colected_tea += int(matrix[i][j])
+    return colected_tea
+
+def is_end_of_game():
+    return colected_tea >= 10
+
+def is_out_of_territory(i, j):
+    return not is_valid_position(i, j)
+
+def is_alice_position(i, j):
+    return matrix[i][j] == "A"
+
+def remove_old_position(i, j):
+    matrix[i][j] = "*"  # remove old position
+    return matrix
+
+def update_alice_position(i, j):
+    matrix[i][j] = "A"
+    return matrix
+
+def move_alice(i, j, command):
+    new_i, new_j = get_new_position(i, j, command)
+    if is_out_of_territory(new_i, new_j):
+        remove_old_position(i, j)
         print("Alice didn't make it to the tea party.")
         print_matrix()
         exit()
+    elif is_rabbit_hole(new_i, new_j):
+        remove_old_position(i, j)
+        print("Alice didn't make it to the tea party.")
+        print_matrix()
+        exit()
+    elif is_empty_position(new_i, new_j):
+        remove_old_position(i, j)
+        update_alice_position(new_i, new_j)
+    elif is_tea_bag(new_i, new_j):
+        collect_tea(new_i, new_j)
+        remove_old_position(i, j)
+        update_alice_position(new_i, new_j)
+    return matrix
+
+def find_alice_position():
     for i, row in enumerate(matrix):
         for j, item in enumerate(row):
             if item == "A":
-                alice_position = (i, j)
-                # remove old position
-                matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
-                break
-        else:
-            continue
-        break
-    new_i = alice_position[0] + directions[command][0]
-    new_j = alice_position[1] + directions[command][1]
-    # if new_i < 0 or new_i >= rows_count or new_j < 0 or new_j >= rows_count:
-    if not (0 <= new_i < rows_count and 0 <= new_j < rows_count):
-        matrix[alice_position[0]][alice_position[1]] = "*"
-        print("Alice didn't make it to the tea party.")
-        print_matrix()
-        exit()
-    elif matrix[new_i][new_j] == "R":
-        matrix[alice_position[0]][alice_position[1]] = "*"
-        print("Alice didn't make it to the tea party.")
-        print_matrix()
-        exit()
-    elif matrix[new_i][new_j] == ".":
-        matrix[alice_position[0]][alice_position[1]] = "*"
-        matrix[new_i][new_j] = "A"
-        alice_position = [new_i, new_j]
-    else:
-        if matrix[new_i][new_j].isdigit():
-            colected_tea += int(matrix[new_i][new_j])
-            matrix[alice_position[0]][alice_position[1]] = "*"
-            matrix[new_i][new_j] = "A"
-            alice_position = [new_i, new_j]
-    if command == "up" and new_i < 0:
-        matrix[alice_position[0]][alice_position[1]] = "*"
-        print("Alice didn't make it to the tea party.")
-        print_matrix()
-        exit()
+                return i, j
+    return None
 
-matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
-print("She did it! She went to the party.")
-print_matrix()
+def play_game():
+    while True:
+        try:
+            command = input()
+        except EOFError:
+            print("Alice didn't make it to the tea party.")
+            print_matrix()
+            exit()
+        i, j = find_alice_position()
+        move_alice(i, j, command)
+        if is_end_of_game():
+            print("She did it! She went to the party.")
+            print_matrix()
+            exit()
+
+def main():
+    play_game()
+
+if __name__ == '__main__':
+    main()
+
+# while colected_tea < 10:
+#     command = input()
+#     # if on the new alice position is "*" or "R" or out of the matrix, print and exit
+#     if matrix[alice_position[0]][alice_position[1]].isdigit():
+#         colected_tea += int(matrix[alice_position[0]][alice_position[1]])
+#     else:
+#         matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
+
+#     for i, row in enumerate(matrix):
+#         for j, item in enumerate(row):
+#             if item == "A":
+#                 alice_position = (i, j)
+#                 # remove old position
+#                 matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
+#                 break
+#         else:
+#             continue
+#         break
+#     new_i = alice_position[0] + directions[command][0]
+#     new_j = alice_position[1] + directions[command][1]
+#     # if new_i < 0 or new_i >= rows_count or new_j < 0 or new_j >= rows_count:
+#     if not (0 <= new_i < rows_count and 0 <= new_j < rows_count):
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         print("Alice didn't make it to the tea party.")
+#         print_matrix()
+#         exit()
+#     elif matrix[new_i][new_j] == "R":
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         print("Alice didn't make it to the tea party.")
+#         print_matrix()
+#         exit()
+#     elif matrix[new_i][new_j] == ".":
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         matrix[new_i][new_j] = "A"
+#         alice_position = [new_i, new_j]
+#     else:
+#         if matrix[new_i][new_j].isdigit():
+#             colected_tea += int(matrix[new_i][new_j])
+#             matrix[alice_position[0]][alice_position[1]] = "*"
+#             matrix[new_i][new_j] = "A"
+#             alice_position = [new_i, new_j]
+#     if command == "up" and new_i < 0:
+#         matrix[alice_position[0]][alice_position[1]] = "*"
+#         print("Alice didn't make it to the tea party.")
+#         print_matrix()
+#         exit()
+
+# matrix[alice_position[0]][alice_position[1]] = "*"  # remove old position
+# print("She did it! She went to the party.")
+# print_matrix()
 
 
 # rows_count = int(input())
