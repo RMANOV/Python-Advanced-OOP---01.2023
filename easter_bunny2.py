@@ -66,7 +66,6 @@ for move in bunny_movings:
         elif move == (0, 1):
             print("right")
 
-
 print(*max_collected_eggs_indexes, sep="\n")
 print(max_collected_eggs)
 
