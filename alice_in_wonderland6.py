@@ -1,6 +1,6 @@
 # Alice in Wonderland
 # Alice is going to the mad tea party, to see her friends. On the way to the party, she needs to collect bags of tea.
-# You will be given an integer n for the size of the Wonderland territory with a square shape. On the following n lines,
+# You will be given an integer n for the rows_count of the Wonderland territory with a square shape. On the following n lines,
 # you will receive the rows of the territory:
 # •	Alice will be placed in a random position, marked with the letter "A".
 # •	On the territory, there will be bags of tea, represented as numbers.
@@ -13,7 +13,7 @@
 # In the end, the path she walked had to be marked with '*'.
 # For more clarifications, see the examples below.
 # Input
-# •	On the first line, you will be given the integer n – the size of the square matrix
+# •	On the first line, you will be given the integer n – the rows_count of the square matrix
 # •	On the following n lines - matrix representing the field (each position separated by a single space)
 # •	On each of the following lines, you will be given a move command
 # Output
@@ -26,53 +26,51 @@
 # Can you re-write the code in case we do not actually move Alices position, just imagine and calculate, but mark with "*" every commanded move
 
 rows_count = int(input())
+
 matrix = []
+alice_position = []
+
 tea_bags = 0
-directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
-alice_first_position = []
 
-def print_matrix():
-    for row in matrix:
-        print(*row, sep=" ")
-
-def is_valid_position(i, j):
-    return 0 <= i < rows_count and 0 <= j < rows_count
-
-def is_rabit_hole(i, j):
-    return matrix[i][j] == "R"
-
-
-
+directions = {
+    'up': (-1, 0),
+    'down': (1, 0),
+    'left': (0, -1),
+    'right': (0, 1),
+}
 
 for row in range(rows_count):
     matrix.append(input().split())
-    
-    if "A" in matrix[row]:
-        alice_first_position = [row, matrix[row].index("A")]
-        matrix[row][matrix[row].index("A")] = "*"
+
+    if 'A' in matrix[row]:
+        alice_position = [row, matrix[row].index('A')]
+        matrix[row][alice_position[1]] = '*'
 
 while tea_bags < 10:
     direction = input()
-    
-    row = alice_first_position[0] + directions[direction][0]
-    col = alice_first_position[1] + directions[direction][1]
-    
-    if is_valid_position(row, col) or not is_rabit_hole(row, col):
-        print("Alice didn't make it to the tea party.")
-        print_matrix()
-        break
-    
-    alice_first_position = [row, col]
-    matrix[row][col] = "*"
+
+    row = alice_position[0] + directions[direction][0]
+    col = alice_position[1] + directions[direction][1]
+
+    if not (0 <= row < rows_count and 0 <= col < rows_count):
+        break 
+
+    alice_position = [row, col]
     position = matrix[row][col]
-    
+    matrix[row][col] = '*'
+
+    if position == 'R':
+        break
+
     if position.isdigit():
         tea_bags += int(position)
 
+if tea_bags < 10:
+    print("Alice didn't make it to the tea party.")
+else:
+    print("She did it! She went to the party.")
 
-    if tea_bags >= 10:
-        print("She did it! She went to the party.")
-        print_matrix()
+print(*[' '.join(row) for row in matrix], sep='\n')
 
 
 
