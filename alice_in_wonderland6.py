@@ -26,45 +26,92 @@
 # Can you re-write the code in case we do not actually move Alices position, just imagine and calculate, but mark with "*" every commanded move
 
 rows_count = int(input())
-matrix = [list(input().split()) for _ in range(rows_count)]
+matrix = []
 tea_bags = 0
 directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
-alice_first_position = [[i, j] for i in range(rows_count) for j in range(rows_count) if matrix[i][j] == "A"][0]
+alice_first_position = []
 
 def print_matrix():
     for row in matrix:
         print(*row, sep=" ")
 
+def is_valid_position(i, j):
+    return 0 <= i < rows_count and 0 <= j < rows_count
 
-command = input()
+def is_rabit_hole(i, j):
+    return matrix[i][j] == "R"
 
-while command:
-    alice_new_position = [alice_first_position[0] + directions[command][0], alice_first_position[1] + directions[command][1]]
-    if 0 <= alice_new_position[0] < rows_count and 0 <= alice_new_position[1] < rows_count:
-        if matrix[alice_new_position[0]][alice_new_position[1]] == "R":
-            matrix[alice_first_position[0]][alice_first_position[1]] = "*"
-            print("Alice didn't make it to the tea party.")
-            print_matrix()
-            break
-        elif matrix[alice_new_position[0]][alice_new_position[1]].isdigit():
-            tea_bags += int(matrix[alice_new_position[0]][alice_new_position[1]])
-            matrix[alice_first_position[0]][alice_first_position[1]] = "*"
-            matrix[alice_new_position[0]][alice_new_position[1]] = "A"
-            alice_first_position = alice_new_position
-        elif matrix[alice_new_position[0]][alice_new_position[1]] == ".":
-            matrix[alice_first_position[0]][alice_first_position[1]] = "*"
-            matrix[alice_new_position[0]][alice_new_position[1]] = "A"
-            alice_first_position = alice_new_position
-    else:
-        matrix[alice_first_position[0]][alice_first_position[1]] = "*"
+
+
+
+for row in range(rows_count):
+    matrix.append(input().split())
+    
+    if "A" in matrix[row]:
+        alice_first_position = [row, matrix[row].index("A")]
+        matrix[row][matrix[row].index("A")] = "*"
+
+while tea_bags < 10:
+    direction = input()
+    
+    row = alice_first_position[0] + directions[direction][0]
+    col = alice_first_position[1] + directions[direction][1]
+    
+    if is_valid_position(row, col) or not is_rabit_hole(row, col):
         print("Alice didn't make it to the tea party.")
         print_matrix()
         break
+    
+    alice_first_position = [row, col]
+    matrix[row][col] = "*"
+    position = matrix[row][col]
+    
+    if position.isdigit():
+        tea_bags += int(position)
+
+
     if tea_bags >= 10:
         print("She did it! She went to the party.")
         print_matrix()
-        break
-    command = input()
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # alice_new_position = [alice_first_position[0] + directions[command][0], alice_first_position[1] + directions[command][1]]
+    # if 0 <= alice_new_position[0] < rows_count and 0 <= alice_new_position[1] < rows_count:
+    #     if matrix[alice_new_position[0]][alice_new_position[1]] == "R":
+    #         matrix[alice_first_position[0]][alice_first_position[1]] = "*"
+    #         print("Alice didn't make it to the tea party.")
+    #         print_matrix()
+    #         break
+    #     elif matrix[alice_new_position[0]][alice_new_position[1]].isdigit():
+    #         tea_bags += int(matrix[alice_new_position[0]][alice_new_position[1]])
+    #         matrix[alice_first_position[0]][alice_first_position[1]] = "*"
+    #         matrix[alice_new_position[0]][alice_new_position[1]] = "A"
+    #         alice_first_position = alice_new_position
+    #     elif matrix[alice_new_position[0]][alice_new_position[1]] == ".":
+    #         matrix[alice_first_position[0]][alice_first_position[1]] = "*"
+    #         matrix[alice_new_position[0]][alice_new_position[1]] = "A"
+    #         alice_first_position = alice_new_position
+    # else:
+    #     matrix[alice_first_position[0]][alice_first_position[1]] = "*"
+    #     print("Alice didn't make it to the tea party.")
+    #     print_matrix()
+    #     break
+    # if tea_bags >= 10:
+    #     print("She did it! She went to the party.")
+    #     print_matrix()
+    #     break
+    # command = input()
 
 
 
