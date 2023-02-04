@@ -51,6 +51,15 @@ while True:
     command = input()
     if command == "Christmas morning":
         break
+    if not (0 <= santa_position[0] + directions[command][0] < size_neighborhood) or not (
+        0 <= santa_position[1] + directions[command][1] < size_neighborhood
+    ):
+        continue
+    if matrix[santa_position[0] + directions[command][0]][
+        santa_position[1] + directions[command][1]
+    ] == "-":
+        continue
+    
     santa_position[0] += directions[command][0]
     santa_position[1] += directions[command][1]
     if matrix[santa_position[0]][santa_position[1]] == "V":
