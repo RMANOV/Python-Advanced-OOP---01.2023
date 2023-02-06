@@ -109,10 +109,7 @@ print(*[' '.join(line) for line in neighborhood], sep='\n')  # принтира�
 if nice_kids_visited == total_nice_kids:  # проверяваме дали всички добри деца са получили подаръци
     print(f'Good job, Santa! {nice_kids_visited} happy nice kid/s.')  # принтираме
 else:  # ако не всички добри деца са получили подаръци
-    print(f'No presents for {total_nice_kids - nice_kids_visited} nice kid/s.')  # принтирамеid/s.")
-elif count_presents > 0 and any("V" in row for row in matrix):
-    print(*[" ".join(row) for row in matrix], sep="\n")
-    print(f"No presents for {nice_kids} nice kid/s.")
+    print(f'No presents for {total_nice_kids - nice_kids_visited} nice kid/s.')  # принтираме
 
 
 # while True:
