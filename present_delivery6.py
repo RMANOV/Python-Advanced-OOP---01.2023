@@ -49,11 +49,14 @@ def eat_cookie(presents_left, nice_kids):
                 presents_left -= 1
                 nice_kids -= 1
                 matrix[r][c] = "-"
+                if not presents_left:
+                    break
             elif matrix[r][c] == "X":
                 matrix[r][c] = "-"
             elif matrix[r][c] == "C":
                 presents_left, nice_kids = eat_cookie(presents_left, nice_kids)
     return presents_left, nice_kids
+
 
 
 while presents and total_nice_kids_with_presents < total_nice_kids:
