@@ -50,17 +50,17 @@ peaks = {
 conquered_peaks = []
 days = 7
 
-def if_conquered(peak, difficulty):
-    if food_portions_decq and stamina_decq:
-        if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
-            food_portions_decq.pop()
-            stamina_decq.popleft()
-            conquered_peaks.append(peak)
-            return True
-        else:
-            food_portions_decq.pop()
-            stamina_decq.popleft()
-            return False
+while days > 0 and food_portions_decq and stamina_decq:
+    days -= 1
+    for peak, difficulty in peaks.items():
+        if food_portions_decq and stamina_decq:
+            if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+                food_portions_decq.pop()
+                stamina_decq.popleft()
+                conquered_peaks.append(peak)
+            else:
+                food_portions_decq.pop()
+                stamina_decq.popleft()
 
 
 
