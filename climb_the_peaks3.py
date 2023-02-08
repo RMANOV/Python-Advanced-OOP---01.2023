@@ -49,10 +49,23 @@ peaks = {
     "Kamenitza": 70
 }
 days = 7
+conquered_peaks = []
 
-days_point = [ food_portions_decq[-1] + stamina_decq[0] for _ in range(days)]
+while days > 0:
+    if food_portions_decq and stamina_decq:
+        for peak, difficulty in peaks.items():
+            if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+                food_portions_decq.pop()
+                stamina_decq.popleft()
+                conquered_peaks.append(peak)
+            else:
+                food_portions_decq.pop()
+                stamina_decq.popleft()
+                break
+        days -= 1
+    else:
+        break
 
-conquered_peaks = [ peak for peak, difficulty in peaks.items() if difficulty <= days_point.pop(0) ]
 
 
 if len(conquered_peaks) == len(peaks):
