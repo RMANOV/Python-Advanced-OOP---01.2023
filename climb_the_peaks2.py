@@ -50,33 +50,24 @@ peaks = {
 conquered_peaks = []
 days = 7
 
-# if not conquer peak - try the same peak next day
-def try_again(peak, difficulty):
-    if food_portions_decq and stamina_decq:
-        if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
-            food_portions_decq.pop()
-            stamina_decq.popleft()
-            conquered_peaks.append(peak)
-        else:
-            food_portions_decq.pop()
-            stamina_decq.popleft()
-
-def conquer_peak(peak, difficulty):
-    if food_portions_decq and stamina_decq:
-        if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
-            food_portions_decq.pop()
-            stamina_decq.popleft()
-            conquered_peaks.append(peak)
-        else:
-            food_portions_decq.pop()
-            stamina_decq.popleft()
-            try_again(peak, difficulty)
-
-while days > 0:
+while days>0:
     for peak, difficulty in peaks.items():
-        conquer_peak(peak, difficulty)
+        if food_portions_decq and stamina_decq:
+            if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+                food_portions_decq.pop()
+                stamina_decq.popleft()
+                conquered_peaks.append(peak)
+            else:
+                food_portions_decq.pop()
+                stamina_decq.popleft()
+                if food_portions_decq and stamina_decq:
+                    if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+                        food_portions_decq.pop()
+                        stamina_decq.popleft()
+                        conquered_peaks.append(peak)
+        else:
+            break
         days -= 1
-
 
 if len(conquered_peaks) == len(peaks):
     print(
@@ -86,6 +77,65 @@ else:
     print(f"Alex failed! He has to organize his journey better next time -> @PIRINWINS")
 
 print("Conquered peaks:" if conquered_peaks else "", *conquered_peaks, sep="\n")
+
+# def try_again(peak, difficulty):
+#     if food_portions_decq and stamina_decq:
+#         if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+#             food_portions_decq.pop()
+#             stamina_decq.popleft()
+#             conquered_peaks.append(peak)
+#             return True
+#         return False
+
+# while days > 0:
+#     if food_portions_decq and stamina_decq:
+#         for peak, difficulty in peaks.items():
+#             if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+#                 food_portions_decq.pop()
+#                 stamina_decq.popleft()
+#                 conquered_peaks.append(peak)
+#             else:
+#                 food_portions_decq.pop()
+#                 stamina_decq.popleft()
+#                 try_again(peak, difficulty)
+#         days -= 1
+#     else:
+#         break
+
+
+
+
+
+
+# # if not conquer peak - try the same peak next day
+# def try_again(peak, difficulty):
+#     if food_portions_decq and stamina_decq:
+#         if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+#             food_portions_decq.pop()
+#             stamina_decq.popleft()
+#             conquered_peaks.append(peak)
+#         else:
+#             food_portions_decq.pop()
+#             stamina_decq.popleft()
+
+# def conquer_peak(peak, difficulty):
+#     if food_portions_decq and stamina_decq:
+#         if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
+#             food_portions_decq.pop()
+#             stamina_decq.popleft()
+#             conquered_peaks.append(peak)
+#         else:
+#             food_portions_decq.pop()
+#             stamina_decq.popleft()
+#             try_again(peak, difficulty)
+
+# while days > 0:
+#     for peak, difficulty in peaks.items():
+#         conquer_peak(peak, difficulty)
+#         days -= 1
+
+
+
 
 # for _ in range(1,7):
 #     while peaks:
