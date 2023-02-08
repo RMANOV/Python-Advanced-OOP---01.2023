@@ -18,7 +18,7 @@
 # Polezhan	60
 # Kamenitza	70
 
-# Alex will try to conquer as many peaks as he can in seven days. If he manages to climb all the peaks, 
+# Alex will try to conquer as many peaks as he can in seven days. If he manages to climb all the peaks,
 # the journey ends and the output is printed on the Console.
 # Finally, print on the Console all the conquered peaks(in the order of climbing).
 # Input
@@ -46,25 +46,14 @@ peaks = {
     "Kutelo": 90,
     "Banski Suhodol": 100,
     "Polezhan": 60,
-    "Kamenitza": 70,
+    "Kamenitza": 70
 }
-conquered_peaks = []
 days = 7
 
-while days > 0:
-    if food_portions_decq and stamina_decq:
-        for peak, difficulty in peaks.items():
-            if food_portions_decq[-1] + stamina_decq[0] >= difficulty:
-                food_portions_decq.pop()
-                stamina_decq.popleft()
-                conquered_peaks.append(peak)
-            else:
-                food_portions_decq.pop()
-                stamina_decq.popleft()
-                break
-        days -= 1
-    else:
-        break
+days_point = [ food_portions_decq[-1] + stamina_decq[0] for _ in range(days)]
+
+conquered_peaks = [ peak for peak, difficulty in peaks.items() if difficulty <= days_point.pop(0) ]
+
 
 if len(conquered_peaks) == len(peaks):
     print(
@@ -100,10 +89,6 @@ print("Conquered peaks:" if conquered_peaks else "", *conquered_peaks, sep="\n")
 #         break
 
 
-
-
-
-
 # # if not conquer peak - try the same peak next day
 # def try_again(peak, difficulty):
 #     if food_portions_decq and stamina_decq:
@@ -130,8 +115,6 @@ print("Conquered peaks:" if conquered_peaks else "", *conquered_peaks, sep="\n")
 #     for peak, difficulty in peaks.items():
 #         conquer_peak(peak, difficulty)
 #         days -= 1
-
-
 
 
 # for _ in range(1,7):
