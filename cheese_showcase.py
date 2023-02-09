@@ -7,8 +7,15 @@
 # For each kind of cheese, return their pieces quantities in descending order.
 
 def sorting_cheeses(**kwargs):
-    cheeses = {}
-    for cheese, quantity in kwargs.items():
-        cheeses[cheese] = sum(quantity)
-    sorted_cheeses = sorted(cheeses.items(), key=lambda x: (-x[1], x[0]))
-    return sorted_cheeses
+    cheeses = { cheese: sum(quantity) for cheese, quantity in kwargs.items() }
+    cheeses = sorted(cheeses.items(), key=lambda x: (-x[1], x[0]))
+    cheeses = [ (cheese, sorted(quantity, reverse=True)) for cheese, quantity in kwargs.items() ]
+    cheeses = sorted(cheeses, key=lambda x: (-sum(x[1]), x[0]))
+    for cheese in cheeses:
+        print(f'{cheese[0]}: {cheese[1]}')
+    
+    # cheeses = {}
+    # for cheese, quantity in kwargs.items():
+    #     cheeses[cheese] = sum(quantity)
+    # sorted_cheeses = sorted(cheeses.items(), key=lambda x: (-x[1], x[0]))
+    # return sorted_cheeses
