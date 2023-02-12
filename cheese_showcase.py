@@ -7,15 +7,41 @@
 # For each kind of cheese, return their pieces quantities in descending order.
 
 def sorting_cheeses(**kwargs):
-    cheeses = { cheese: sum(quantity) for cheese, quantity in kwargs.items() }
-    cheeses = sorted(cheeses.items(), key=lambda x: (-x[1], x[0]))
-    cheeses = [ (cheese, sorted(quantity, reverse=True)) for cheese, quantity in kwargs.items() ]
-    cheeses = sorted(cheeses, key=lambda x: (-sum(x[1]), x[0]))
-    for cheese in cheeses:
-        print(f'{cheese[0]}: {cheese[1]}')
+    # get data from kwargs and create a dict with the data - keys and lists of values
+        # get keys and store them in a list
+        # get values and store them in a list
+        # create a dict with the keys and values
+    # sort dict by values
+    # sort dict by keys
+    # create a list with the sorted dict
+    # print the result in the required format
+
     
-    # cheeses = {}
-    # for cheese, quantity in kwargs.items():
-    #     cheeses[cheese] = sum(quantity)
-    # sorted_cheeses = sorted(cheeses.items(), key=lambda x: (-x[1], x[0]))
-    # return sorted_cheeses
+    # print '\n'.join([str(cheese) for cheese in sorted_cheeses])
+
+    # return '\n'.join([str(cheese) for cheese in result])
+
+
+def sorting_cheeses(**kwargs):
+    # Get data from kwargs and create a dictionary with the data - keys and lists of values
+    cheeses = {}
+    for cheese, quantities in kwargs.items():
+        cheeses[cheese] = quantities
+    
+    # Sort the dictionary by values (number of pieces of each cheese) in descending order and by keys (cheese names) in ascending order
+    sorted_cheeses = sorted(cheeses.items(), key=lambda x: (-len(x[1]), x[0]))
+    
+    # Format the result and return it as a string
+    result = []
+    for cheese, quantities in sorted_cheeses:
+        result.append(cheese)
+        result.extend(sorted(quantities, reverse=True))
+    return '\n'.join([str(item) for item in result])
+
+print(
+    sorting_cheeses(
+        Parmesan=[102, 120, 135], 
+        Camembert=[100, 100, 105, 500, 430], 
+        Mozzarella=[50, 125],
+    )
+)
