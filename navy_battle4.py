@@ -47,50 +47,70 @@
 
 # get the size of the matrix
 count_of_rows = int(input())
-s_row = 0
-s_col = 0
 matrix = []
 directions = {"up": (-1, 0), "down": (1, 0), "left": (0, -1), "right": (0, 1)}
 number_of_destroyed_cruisers = 0
 number_of_hited_mines = 0
 submarine_position = []
-# get the matrix - row by row - as a list of strings - each string is a row - each row is a list of characters
-for row in range(count_of_rows):
-    matrix.append(list(input()))
-# in each row, find the position of the submarine
-for row in range(count_of_rows):
-    if "S" in matrix[row]:
-        s_row = row
-        s_col = matrix[row].index("S")
-        submarine_position = [s_row, s_col]
-        break
-# get the direction of the submarine
-while True:
-    command = input()
-    # check if the commands destroy all the battle cruisers or if the submarine is hit by a mine three times
+
+def print_result():
     if number_of_destroyed_cruisers == 3:
         print("Mission accomplished, U-9 has destroyed all battle cruisers of the enemy!")
-        break
-    if number_of_hited_mines == 3:
+    else:
         print(f"Mission failed, U-9 disappeared! Last known coordinates [{submarine_position[0]}, {submarine_position[1]}]!")
-        break
-    # if the game is over - break the loop
-    # move the submarine
-    submarine_position[0] += directions[command][0]
-    submarine_position[1] += directions[command][1]
-    # check if the submarine is out of the battlefield
-    if submarine_position[0] < 0 or submarine_position[0] >= count_of_rows or submarine_position[1] < 0 or submarine_position[1] >= count_of_rows:
-        print(f"Mission failed, U-9 disappeared! Last known coordinates [{submarine_position[0]}, {submarine_position[1]}]!")
-        break
-    # check if the submarine is on a mine
-    if matrix[submarine_position[0]][submarine_position[1]] == "*":
-        matrix[submarine_position[0]][submarine_position[1]] = "-"
-        number_of_hited_mines += 1
-    # check if the submarine is on a battle cruiser
-    if matrix[submarine_position[0]][submarine_position[1]] == "C":
-        matrix[submarine_position[0]][submarine_position[1]] = "-"
-        number_of_destroyed_cruisers += 1
+    print(*["".join(row) for row in matrix], sep="\n")
 
+for _ in range(count_of_rows):
+    matrix.append(list(input()))
+
+while True:
+    direction = input()
+    # get the direction of the submarine
+    # check if the commands destroy all the battle cruisers or if the submarine is hit by a mine three times
+    # if the submarine is hit by a mine three times, print the message and break the loop
+    # if the submarine destroys all the battle cruisers, print the message and break the loop
+    # if the game is over - break the loop
+    if number_of_destroyed_cruisers == 3 or number_of_hited_mines == 3:
+        print_result()
+        break
+    # in each row, find the position of the submarine
+    # check if the submarine is in the row - if not, continue to the next row
+    # if the submarine is in the row, get the position of the submarine
+    for row in range(count_of_rows):
+        if "S" in matrix[row]:
+            submarine_position = [row, matrix[row].index("S")]
+            break
+    # get the new position of the submarine
+    new_position = [submarine_position[0] + directions[direction][0], submarine_position[1] + directions[direction][1]]
+    # check if the new position is out of the matrix
+    if not 0 <= new_position[0] < count_of_rows or not 0 <= new_position[1] < count_of_rows:
+        continue
+    # check if the new position is a mine
+    # if the new position is a mine, increase the number of hited mines
+    # if the submarine is hit by a mine three times, print the message and break the loop
+    if matrix[new_position[0]][new_position[1]] == "*":
+        number_of_hited_mines += 1
+        if number_of_hited_mines == 3:
+            print_result()
+            break
+        matrix[new_position[0]][new_position[1]] = "-"
+        continue
+    # check if the new position is a battle cruiser
+    # if the new position is a battle cruiser, increase the number of destroyed cruisers
+    # if the submarine destroys all the battle cruisers, print the message and break the loop
+    if matrix[new_position[0]][new_position[1]] == "C":
+        number_of_destroyed_cruisers += 1
+        if number_of_destroyed_cruisers == 3:
+            print_result()
+            break
+        matrix[new_position[0]][new_position[1]] = "-"
+        continue
+    # if the new position is empty, move the submarine to the new position
+    if matrix[new_position[0]][new_position[1]] == "-":
+        matrix[new_position[0]][new_position[1]] = "S"
+        matrix[submarine_position[0]][submarine_position[1]] = "-"
+        submarine_position = new_position
+        continue
 
 
 
