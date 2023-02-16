@@ -43,9 +43,9 @@ def students_credits(*args):
     total_credits = sum(sorted_courses.values())
 
     if total_credits >= 240:
-        print(f"Diyan gets a diploma with {total_credits:.1f} credits.")
+        final_print.append(f"Diyan gets a diploma with {total_credits:.1f} credits.")
     else:
-        print(f"Diyan needs {240 - total_credits:.1f} credits more for a diploma.")
+        final_print.append(f"Diyan needs {240 - total_credits:.1f} credits more for a diploma.")
 
     for course, credits in sorted_courses.items():
         final_print.append(f"{course} - {credits:.1f}")
