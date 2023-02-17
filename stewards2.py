@@ -8,7 +8,7 @@
 # •	If you match an already taken seat, you should just remove both numbers from their sequences.
 # Each time you take numbers from the sequences and try to match them, you make one rotation. You should keep track of all rotations made.
 # The program should end under the following circumstances:
-# •	You have found 3 (three) seat matches 
+# •	You have found 3 (three) seat matches
 # •	You have made a total of 10 rotations
 # Input
 # •	On the first line, you will be given a sequence of seats - strings separated by comma and space ", "
@@ -26,29 +26,33 @@
 
 from collections import deque
 
-seats = (input().split(", "))
+seats = deque(input().split(", "))
 first_sequence = deque(map(int, input().split(", ")))
 second_sequence = deque(map(int, input().split(", ")))
 matches = []
 rotations = 0
 
-while rotations < 10 and len(matches) < 3:
+while rotations < 10:
+    if len(matches) == 3:
+        break
     first_number = first_sequence.popleft()
     second_number = second_sequence.pop()
     total = first_number + second_number
     character = chr(total)
-    seat = f"{first_number}{character}"
-    if seat in seats:
-        seats.remove(seat)
-        matches.append(seat)
+    for seat in [f"{first_number}{character}", f"{second_number}{character}"]:
+        if seat in matches:
+            break
+        if seat in seats:
+            matches.append(seat)
+            break
     else:
         first_sequence.append(first_number)
         second_sequence.appendleft(second_number)
+
     rotations += 1
 
 print(f"Seat matches: {', '.join(matches)}")
 print(f"Rotations count: {rotations}")
-
 
 
 # from collections import deque
