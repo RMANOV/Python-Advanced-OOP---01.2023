@@ -8,7 +8,8 @@
 # To calculate the caffeine in the drink take the last milligrams of caffeinе and the first energy drink, and multiply them. 
 # Then, compare the result with the caffeine Stamat drank:
 # •	If the sum of the caffeine in the drink and the caffeine that Stamat drank doesn't exceed 300 milligrams, 
-# remove both the milligrams of caffeinе and the drink from their sequences. Also, add the caffeine to Stamat's total caffeine.
+# remove both the milligrams of caffeinе and the drink from their sequences. 
+# Also, add the caffeine to Stamat's total caffeine.
 # •	If Stamat is about to exceed his maximum caffeine per night, do not add the caffeine to Stamat’s total caffeine. 
 # Remove the milligrams of caffeinе and move the drink to the end of the sequence. 
 # Also, reduce the current caffeine that Stamat has taken by 30 (Note: Stamat's caffeine cannot go below 0).
@@ -30,25 +31,26 @@
 
 from collections import deque
 
-mili_grams = deque([int(x) for x in input().split(", ")])
-energy_drinks = deque([int(x) for x in input().split(", ")])
+milligrams = deque([int(x) for x in input().split(", ")])
+drinks = deque([int(x) for x in input().split(", ")])
+current_caffeine = 0
 
-while mili_grams and energy_drinks:
-    current_mili_grams = mili_grams.pop()
-    current_energy_drink = energy_drinks.popleft()
-    current_caffeine = current_mili_grams * current_energy_drink
-    if current_caffeine <= 300:
-        mili_grams.appendleft(current_mili_grams)
-        energy_drinks.append(current_energy_drink)
-        current_caffeine += current_caffeine
+while milligrams and drinks:
+    last_milligrams = milligrams.pop()
+    first_drink = drinks[0]
+    drink_caffeine = last_milligrams * first_drink
+    if current_caffeine + drink_caffeine <= 300:
+        current_caffeine += drink_caffeine
+        drinks.popleft()
     else:
-        mili_grams.appendleft(current_mili_grams)
-        energy_drinks.append(current_energy_drink)
         current_caffeine -= 30
         if current_caffeine < 0:
             current_caffeine = 0
+        drinks.rotate(-1)
 
-if energy_drinks:
-    print(f"Drinks left: {' '.join(map(str, energy_drinks))}")
+if drinks:
+    print(f"Drinks left: {', '.join(map(str, drinks))}")
 else:
     print("At least Stamat wasn't exceeding the maximum caffeine.")
+
+print(f"Stamat is going to sleep with {current_caffeine} mg caffeine.")
