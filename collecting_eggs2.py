@@ -42,28 +42,24 @@ while eggs and papers:
     paper = papers.pop()
     if egg <= 0:
         papers.append(paper)
-        
+        continue
     elif egg == 13:
+        if len(papers) == 1:
+            papers.appendleft(paper)
+            continue
         first_paper = papers.popleft()
         papers.append(first_paper)
         papers.appendleft(paper)
-        
     else:
         if egg + paper <= 50:
             boxes_filled += 1
         else:
             continue
-    
-
-
-
 
 if boxes_filled > 0:
     print(f"Great! You filled {boxes_filled} box{'es' if boxes_filled > 1 else ''}.")
 else:
     print("Sorry! You couldn't fill any boxes!")
-    exit()
-
 
 print(f"Eggs left: {', '.join(map(str, eggs))}") if eggs else None
 print(f"Pieces of paper left: {', '.join(map(str, papers))}") if papers else None
