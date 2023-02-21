@@ -52,8 +52,18 @@ def update_time():
     
     # Try to get the last restart and login times
     try:
+        # Get the uptime and last login strings
         uptime = str(datetime.datetime.now() - get_last_restart())
         last_login = str(datetime.datetime.now() - get_last_login())
+        
+       
+    
+        # Remove the microseconds from the uptime and last login strings
+        uptime = uptime.split(".")[0]
+        last_login = last_login.split(".")[0]
+        # calculate the uptime and last login in days, hours, minutes
+        uptime = f"{uptime.split()[0]} days, {uptime.split()[2]} hours, {uptime.split()[4]} minutes"
+        last_login = f"{last_login.split()[0]} days, {last_login.split()[2]} hours, {last_login.split()[4]} minutes"
     except TypeError:
         # If either value is None, set them to "unknown"
         uptime = "Unknown"
