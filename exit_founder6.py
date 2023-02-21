@@ -38,44 +38,80 @@ player_positions = {first_player: [-1, -1], second_player: [-1, -1]}
 # Find the positions of the players in the matrix
 for i in range(6):
     for j in range(6):
-        if matrix[i][j] == "1": # "T" or "J"
+        if matrix[i][j] == "1":  # "T" or "J"
             player_positions[first_player] = [i, j]
         elif matrix[i][j] == "2":
             player_positions[second_player] = [i, j]
 
+# Find the position of the exit
+exit_position = [[i, j] for i in range(6) for j in range(6) if matrix[i][j] == "E"][0]
+
+
+def is_valid_position(position):
+    return 0 <= position[0] < 6 and 0 <= position[1] < 6
+
+
+def switch_player(player):
+    return first_player if player == second_player else second_player
+
+
+def switch_player_position(player):
+    return (
+        player_positions[second_player]
+        if player == first_player
+        else player_positions[first_player]
+    )
+
+
+def print_result(player, winner):
+    print(f"{player} is out of the game! The winner is {winner}.")
+    exit()
+
+
+def print_result_exit(player):
+    print(f"{player} found the Exit and wins the game!")
+    exit()
+
+
+def print_result_wall(player):
+    print(f"{player} hits a wall and needs to rest.")
+
+
 # Play the game
-current_player = first_player
-opponent = second_player
+def play_game():
+    current_player = first_player
+    while True:
+        # Read the coordinates
+        row, col = [int(x) for x in input()[1:-1].split(", ")]
+        # Check if the coordinates are valid
+        if not is_valid_position([row, col]):
+            continue
+        # Check if the player hits a wall
+        if matrix[row][col] == "W":
+            print_result_wall(current_player)
+            continue
+        # Check if the player hits a trap
+        if matrix[row][col] == "T":
+            print_result(current_player, switch_player(current_player))
+        # Check if the player hits the exit
+        if matrix[row][col] == "E":
+            print_result_exit(current_player)
+        # Check if the player steps on the other player
+        if player_positions[switch_player(current_player)] == [row, col]:
+            print_result(current_player, switch_player(current_player))
+        # Update the player's position
+        player_positions[current_player] = [row, col]
+        # Check if the player has found the exit
+        if player_positions[current_player] == exit_position:
+            print_result_exit(current_player)
+        # Switch the player
+        current_player = switch_player(current_player)
+        return play_game()
 
-while True:
-    # Get the current player's position and the opponent's position
-    current_position = player_positions[current_player]
-    opponent_position = player_positions[opponent]
 
-    # Get the next move from the current player
-    next_move = input().strip()
-    next_row, next_col = map(int, next_move[1:-1].split(","))
+def main():
+    play_game()
 
-    # Check if the move is valid
-    if not (0 <= next_row < 6 and 0 <= next_col < 6):
-        # print("Invalid move!")
-        continue
 
-    # Update the player's position in the matrix
-    if matrix[next_row][next_col] == "W":
-        print(f"{current_player} hits a wall and needs to rest.")
-    elif matrix[next_row][next_col] == "T":
-        print(f"{current_player} is out of the game! The winner is {opponent}.")
-        break
-    elif matrix[next_row][next_col] == "E":
-        print(f"{current_player} found the Exit and wins the game!")
-        break
-    else:
-        matrix[current_position[0]][current_position[1]] = "."
-        current_position[0], current_position[1] = next_row, next_col
-        matrix[current_position[0]][current_position[1]] = str(current_player[0]) # "T" or "J"
-        player_positions[current_player] = current_position
-
-    # Switch to the other player
-    current_player, opponent = opponent, current_player
-    player_positions[current_player], player_positions[opponent] = player_positions[opponent], player_positions[current_player]
+if __name__ == "__main__":
+    main()
