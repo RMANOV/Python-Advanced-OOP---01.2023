@@ -1,6 +1,7 @@
 import datetime
 import tkinter as tk
 import os
+import re
 
 # Create the main window
 window = tk.Tk()
@@ -15,14 +16,16 @@ def get_active_users():
     actives = [line.split()[0] for line in active_users.splitlines() if line.strip() and not line.startswith('User')]
     return actives
 
-# Define a function to get the time from last restart
+# Define a function to get the time from last restart in days, hours, minutes
 def get_last_restart():
     systeminfo = os.popen('systeminfo').read()
     for line in systeminfo.splitlines():
-        if "System Boot Time" in line:
+        if "System Boot Time:" in line:
             try:
-                last_restart_str = line.split(":")[1].strip()[:10]
-                last_restart = datetime.datetime.strptime(last_restart_str,"%d.%m.%Y")
+                # Get the last restart time as a datetime object using regex
+                last_restart_str = r'(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})'
+                # last_restart_str = line.split(":")[1].strip()[:10]
+                last_restart = datetime.datetime.strptime(last_restart_str, "%d.%m.%Y")
                 return last_restart
             except ValueError:
                 print("Could not get last restart time.")
@@ -34,7 +37,9 @@ def get_last_login():
     for line in lastlogontime.splitlines():
         if "Last logon" in line:
             try:
-                last_login_str = line.split(":")[1].strip()
+                # Get the last login time as a datetime object using regex
+                last_login_str = r'(\d{2})\.(\d{2})\.(\d{4}) (\d{2}):(\d{2}):(\d{2})'
+                # last_login_str = line.split(":")[1].strip()
                 last_login = datetime.datetime.strptime(last_login_str, "%H:%M:%S, %d.%m.%Y")
                 return last_login
             except ValueError:
@@ -52,7 +57,7 @@ def update_time():
     
     # Try to get the last restart and login times
     try:
-        # Get the uptime and last login strings
+        # Get the uptime and last login strings - only in days
         uptime = str(datetime.datetime.now() - get_last_restart())
         last_login = str(datetime.datetime.now() - get_last_login())
         
@@ -61,7 +66,7 @@ def update_time():
         # Remove the microseconds from the uptime and last login strings
         uptime = uptime.split(".")[0]
         last_login = last_login.split(".")[0]
-        # calculate the uptime and last login in days, hours, minutes
+        # calculate the uptime and last login in days
         uptime = f"{uptime.split()[0]} days, {uptime.split()[2]} hours, {uptime.split()[4]} minutes"
         last_login = f"{last_login.split()[0]} days, {last_login.split()[2]} hours, {last_login.split()[4]} minutes"
     except TypeError:
