@@ -48,8 +48,8 @@ def update_time():
         current_day = datetime.datetime.now().strftime("%A")
         current_year_day = datetime.datetime.now().strftime("%j Day")
 
-    # calculate the uptime in days
-    uptime = f'{ (datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).days} days, {(datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).seconds // 3600} hours, {(datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).seconds // 60} minutes'
+    # calculate the uptime in days and hours
+    uptime = f'{ (datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).days} days, {(datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).seconds // 3600} hours'
 
 
     # Concatenate the date, time, and active users into a single string
