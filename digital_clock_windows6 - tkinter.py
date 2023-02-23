@@ -50,7 +50,7 @@ def update_time():
     # Format the current time and date as separate variables
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     current_date = datetime.datetime.now().strftime("%d.%m.%Y")
-
+    timer1 = timer_from_start_of_program()
     # do not update the uptime every second - only once a day
     last_restart_date = ""
     if last_restart_date != current_date:
@@ -60,7 +60,7 @@ def update_time():
         current_week = datetime.datetime.now().strftime("%U Week")
         current_day = datetime.datetime.now().strftime("%A")
         current_year_day = datetime.datetime.now().strftime("%j Day")
-        timer1 = timer_from_start_of_program()
+        
 
     # calculate the uptime in days and hours
     uptime = f'{ (datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).days} days, { (datetime.datetime.now() - datetime.datetime.strptime(last_r[1], "%H:%M:%S")).seconds // 3600} hours'
