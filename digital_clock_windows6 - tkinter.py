@@ -12,6 +12,8 @@ time_label = tk.Label(
     window, text="", font=("Calibry", 65), bg="black", fg="white", bd=0
 )
 
+# Get the time of start of the program
+time_of_start = datetime.datetime.now().strftime("%H:%M:%S")
 
 def get_last_restart():
     # this function should be called only once a day
@@ -32,6 +34,17 @@ def get_last_restart():
                 return None
 
 
+# Define a function to add a timer to the label text - to count time from the start of the program
+def timer_from_start_of_program():
+    # get difference between current time and time of start of the program
+    timer = (datetime.datetime.now() - datetime.datetime.strptime(time_of_start, "%H:%M:%S")).seconds
+    # if seconds is more than 60, calculate minutes and seconds and hours, else return seconds
+    if timer > 60:
+        timer = f'{timer // 3600} h, {(timer // 60) % 60} min, {timer % 60} sec'
+    return timer
+
+
+
 # Define a function to update the label text every second
 def update_time():
     # Format the current time and date as separate variables
@@ -47,13 +60,14 @@ def update_time():
         current_week = datetime.datetime.now().strftime("%U Week")
         current_day = datetime.datetime.now().strftime("%A")
         current_year_day = datetime.datetime.now().strftime("%j Day")
+        timer1 = timer_from_start_of_program()
 
     # calculate the uptime in days and hours
     uptime = f'{ (datetime.datetime.now() - datetime.datetime.strptime(last_r[0], "%d.%m.%Y")).days} days, { (datetime.datetime.now() - datetime.datetime.strptime(last_r[1], "%H:%M:%S")).seconds // 3600} hours'
 
 
     # Concatenate the date, time, and active users into a single string
-    current_time_str = f"{current_time}\n{current_date}\n{current_week}\n{current_day}\n{current_year_day}\nUp-time: {uptime}\nUp-time date: {last_r[0]}\nUp-time time: {last_r[1]}"
+    current_time_str = f"{current_time}\n{current_date}\n{current_week}\n{current_day}\n{current_year_day}\nUp-time: {uptime}\nUp-time date: {last_r[0]}\nUp-time time: {last_r[1]}\nTimer from start : {timer1}"
 
     # Update the label text
     time_label.config(text=current_time_str)
