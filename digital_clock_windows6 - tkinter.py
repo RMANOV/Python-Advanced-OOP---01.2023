@@ -14,6 +14,45 @@ time_label = tk.Label(
 
 # Get the time of start of the program
 time_of_start = datetime.datetime.now().strftime("%H:%M:%S")
+date_of_start = datetime.datetime.now().strftime("%d.%m.%Y")
+
+# Define a function to get the weather data for current location from the OpenWeatherMap API
+def get_weather_data():
+    # get current location
+    location = os.popen("wmic path win32_computersystemproduct get uuid").read()
+    match_location = re.search(r"UUID\s+(.+)", location)
+    if match_location:
+        try:
+            location_str = match_location.group(1)
+            location_str = location_str.strip()
+            print(location_str)
+        except ValueError:
+            location_str = "Sofia"
+            return location_str
+        
+    # get weather data from the OpenWeatherMap API
+    def get_weather(location_str):
+        try:
+            url = f"http://api.openweathermap.org/data/2.5/weather?q={location_str}&appid=API_KEY&units=metric"
+            response = requests.get(url)
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as error:
+            print(error)
+            return None
+        else:
+            return response.json()
+
+    # format the weather data
+    def format_weather(weather):
+        try:
+            name = weather["name"]
+            desc = weather["weather"][0]["description"]
+            temp = weather["main"]["temp"]
+            formatted_weather = f"{name}: {desc}, {temp}°C"
+            return formatted_weather
+        except:
+            print("Could not format weather.")
+            return None
 
 def get_last_restart():
     # this function should be called only once a day
@@ -51,15 +90,25 @@ def update_time():
     current_time = datetime.datetime.now().strftime("%H:%M:%S")
     current_date = datetime.datetime.now().strftime("%d.%m.%Y")
     timer1 = timer_from_start_of_program()
+    weather_condition = get_weather_data()
     # do not update the uptime every second - only once a day
-    last_restart_date = ""
-    if last_restart_date != current_date:
-        last_r = get_last_restart()
-        # last_l = get_last_login()
-        last_restart_date = current_date
-        current_week = datetime.datetime.now().strftime("%U Week")
-        current_day = datetime.datetime.now().strftime("%A")
-        current_year_day = datetime.datetime.now().strftime("%j Day")
+    global date_of_start
+    if current_date != date_of_start:
+        for i in range(1):
+            last_r = get_last_restart()
+            last_restart_date = current_date
+            current_week = datetime.datetime.now().strftime("%U Week")
+            current_day = datetime.datetime.now().strftime("%A")
+            current_year_day = datetime.datetime.now().strftime("%j Day")
+            date_of_start = current_date
+            
+    else:
+        for i in range(1):
+            last_r = get_last_restart()
+            last_restart_date = current_date
+            current_week = datetime.datetime.now().strftime("%U Week")
+            current_day = datetime.datetime.now().strftime("%A")
+            current_year_day = datetime.datetime.now().strftime("%j Day")
         
 
     # calculate the uptime in days and hours
@@ -67,7 +116,7 @@ def update_time():
 
 
     # Concatenate the date, time, and active users into a single string
-    current_time_str = f"{current_time}\n{current_date}\n{current_week}\n{current_day}\n{current_year_day}\nUp-time: {uptime}\nUp-time date: {last_r[0]}\nUp-time time: {last_r[1]}\nTimer from start : {timer1}"
+    current_time_str = f"{current_time}\n{current_date}\n{current_week}\n{current_day}\n{current_year_day}\nUp-time: {uptime}\nUp-time date: {last_r[0]}\nUp-time time: {last_r[1]}\nTimer from start : {timer1} \nWeather: {weather_condition}"
 
     # Update the label text
     time_label.config(text=current_time_str)
