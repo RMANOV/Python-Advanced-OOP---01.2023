@@ -1,6 +1,11 @@
 # Write a function that takes (from file) ip address, mac address, user text - device owner, first detected time and date, last detected time and date, detection count, active status - yes or no, and a list of all the devices that have been detected. 
 # Function should return all the devices (user text - device owner) that have been detected to connect and disconect oftenly - mostly together.
 # Inner list should contain the device owner, first detected time and date, last detected time and date, detection count and mac address and ip address.
+# Outer list should be sorted by the number of times the devices have been detected to connect and disconnect together.
+
+
+
+import datetime
 
 
 def detective():
@@ -73,5 +78,63 @@ def detective():
         return together
     
     
-    # define a function that returns a list of devices that are connected and disconnected more than 3 times together with given from the console device
+    # define a function that returns a list of devices that are connected and disconnected more than 3 times together with given from the console device owner
     def detective(data, together, user):
+        # create a list of devices that are connected and disconnected more than 3 times together with given from the console device owner
+        detective = []
+        # iterate through the data
+        for i in data:
+            # if device owner is the same as the given from the console device owner, add it to the list
+            if i['user'] == user:
+                detective.append(i)
+        # iterate through the list of devices
+        for i in detective:
+            # if device owner is not in the list of devices that are connected and disconnected more than 3 times together, remove it from the list
+            if i['user'] not in together:
+                detective.remove(i)
+        # sort the list by the first detected time and date
+        detective = sorted(detective, key=lambda x: x['first'])
+        return detective
+    
+    
+    
+    # define a function that write the list of devices that are connected and disconnected more than 3 times together - in file
+    def write_to_file(together):
+        # open the file
+        with open('detective.txt', 'w') as f:
+            # write the list of devices that are connected and disconnected more than 3 times together - in file
+            f.write(*together, sep='\n')
+    
+    
+    # define a function that read the list of devices that are connected and disconnected more than 3 times together - from file, before geting the new data from the file - to avoid duplicates, just to add the new data - in second run
+    def read_from_file() -> list:
+        # open the file
+        with open('detective.txt', 'r') as f:
+            # read the list of devices that are connected and disconnected more than 3 times together - from file
+            detective = f.readlines()
+            # create a list of devices that are connected and disconnected more than 3 times together - from file
+            detective = [i.strip() for i in detective]
+            return detective
+        
+  
+    
+    
+    
+    # call the functions
+    # get data from file
+    data = get_data()
+    # create a dictionary with mac address as key and list of all the devices that have conect and disconnect with it
+    paired_devices = paired_devices(data)
+    # create a list of devices that are connected and disconnected more than 3 times together
+    together = count_together(paired_devices)
+    # get device owner from the console
+    user = input('Enter device owner: ')
+    # create a list of devices that are connected and disconnected more than 3 times together with given from the console device owner
+    detective = detective(data, together, user)
+    # write the list of devices that are connected and disconnected more than 3 times together - in file
+    write_to_file(together)
+    # read the list of devices that are connected and disconnected more than 3 times together - from file
+    # before geting the new data from the file - to avoid duplicates, just to add the new data - in second run
+    detective = read_from_file()
+    # print the list
+    print(*detective, sep='\n')
