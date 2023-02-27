@@ -1,6 +1,6 @@
 # Pizza Delivery
-# Create a class called PizzaDelivery. Upon initialization, it should receive a name (string), a price (float), 
-# and ingredients (dictionary). The class should also have an instance attribute ordered set to False by default. 
+# Create a class called PizzaDelivery. Upon initialization, it should receive a name (string), a price (float), and ingredients (dictionary). 
+# The class should also have an instance attribute ordered set to False by default. 
 # You should also create 3 additional instance methods:
 # -	add_extra(ingredient: str, quantity: int, price_per_quantity: float):
 # o	If we already have this ingredient in our pizza, 
