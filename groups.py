@@ -79,8 +79,6 @@ class Group(Group):
         elif isinstance(other, Person):
             return Group(self.name, self.people + [other])
 
-
-
     def __iter__(self):
         return iter(self.people)
 
