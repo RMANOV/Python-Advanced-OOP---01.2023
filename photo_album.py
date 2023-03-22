@@ -36,9 +36,9 @@ class PhotoAlbum:
     def display(self):
         result = ""
         for page in self.photos:
-            result += "-" * 11 + " "
+            result += "-" * 11 + "\n"
             if page:
                 result += " ".join(["[]" for _ in range(len(page))])
-            result += " " + "-" * 11 + " "
+            result += " " + "-" * 11 + "\n"
 
         return result
