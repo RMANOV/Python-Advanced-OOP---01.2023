@@ -1,38 +1,32 @@
-from project.animals.animal import Animal
-from abc import ABC, abstractmethod
-from project.animals.birds import Owl, Hen
-from project.food import Vegetable, Fruit, Meat, Seed
+from project.animals.animal import Bird
+from project.food import Meat, Fruit, Vegetable, Seed
 
-class Bird(Animal):
-    def __init__(self, name, weight, wing_size):
-        super().__init__(name, weight)
-        self.wing_size = wing_size
-
-    def __repr__(self):
-        return f"{self.__class__.__name__} [{self.name}, {self.wing_size}, {self.weight}, {self.food_eaten}]"
 
 
 class Owl(Bird):
-    def __init__(self, name, weight, wing_size):
-        super().__init__(name, weight, wing_size)
-
-    def make_sound(self):
+    
+    @staticmethod
+    def make_sound():
         return "Hoot Hoot"
 
-    def feed(self, food):
-        if food.__class__.__name__ == "Meat":
-            self.weight += 0.25 * food.quantity
-            self.food_eaten += food.quantity
-        else:
-            return f"{self.__class__.__name__} does not eat {food.__class__.__name__}!"
+    @property
+    def gained_weight(self):
+        return 0.25
+
+    @property
+    def food_that_eats(self):
+        return [Meat]
 
 class Hen(Bird):
-    def __init__(self, name, weight, wing_size):
-        super().__init__(name, weight, wing_size)
 
-    def make_sound(self):
+    @staticmethod
+    def make_sound():
         return "Cluck"
 
-    def feed(self, food):
-        self.weight += 0.35 * food.quantity
-        self.food_eaten += food.quantity
+    @property
+    def gained_weight(self):
+        return 0.35
+
+    @property
+    def food_that_eats(self):
+        return [Meat, Fruit, Vegetable, Seed]
