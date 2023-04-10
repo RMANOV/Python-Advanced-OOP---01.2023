@@ -1,0 +1,60 @@
+from project.tennis_player import TennisPlayer
+import unittest
+from unittest import main
+
+
+class TestTennisPlayer(unittest.TestCase):
+
+    def setUp(self):
+        self.player1 = TennisPlayer("Roger Federer", 40, 1000.0)
+        self.player2 = TennisPlayer("Rafael Nadal", 35, 1200.0)    
+
+
+
+
+
+
+
+    def test_init(self):
+        self.assertEqual(self.player1.name, "Roger Federer")
+        self.assertEqual(self.player1.age, 40)
+        self.assertEqual(self.player1.points, 1000.0)
+        self.assertEqual(self.player1.wins, [])
+
+    def test_invalid_name(self):
+        with self.assertRaises(ValueError):
+            TennisPlayer("R", 40, 1000.0)
+
+    def test_invalid_age(self):
+        with self.assertRaises(ValueError):
+            TennisPlayer("Roger Federer", 17, 1000.0)
+
+    def test_name_setter(self):
+        self.player1.name = "Andy Murray"
+        self.assertEqual(self.player1.name, "Andy Murray")
+
+    def test_age_setter(self):
+        self.player1.age = 41
+        self.assertEqual(self.player1.age, 41)
+
+    def test_add_new_win(self):
+        self.player1.add_new_win("Wimbledon")
+        self.assertIn("Wimbledon", self.player1.wins)
+
+    def test_add_new_win_duplicate(self):
+        self.player1.add_new_win("Wimbledon")
+        response = self.player1.add_new_win("Wimbledon")
+        self.assertEqual(response, "Wimbledon has been already added to the list of wins!")
+
+    def test_lt(self):
+        result = self.player1 < self.player2
+        self.assertEqual(result, "Rafael Nadal is a top seeded player and he/she is better than Roger Federer")
+
+    def test_str(self):
+        player_str = str(self.player1)
+        expected_str = "Tennis Player: Roger Federer\nAge: 40\nPoints: 1000.0\nTournaments won: "
+        self.assertEqual(player_str, expected_str)
+
+
+if __name__ == "__main__":
+    unittest.main()

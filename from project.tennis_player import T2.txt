@@ -1,0 +1,41 @@
+from project.tennis_player import TennisPlayer
+import unittest
+from unittest import main
+
+
+class TestTennisPlayer(unittest.TestCase):
+
+    def setUp(self):
+        self.player1 = TennisPlayer("Roger Federer", 40, 1000.0)
+        self.player2 = TennisPlayer("Rafael Nadal", 35, 1200.0)
+
+    def test_init(self):
+        self.assertEqual(self.player1.name, "Roger Federer")
+        self.assertEqual(self.player1.age, 40)
+        self.assertEqual(self.player1.points, 1000.0)
+        self.assertEqual(self.player1.wins, [])
+
+    def test_name_raises(self):
+        with self.assertRaises(ValueError) as ex:
+            self.player1.name = "R"
+        self.assertEqual(str(ex.exception), "Name should be more than 2 symbols!")
+
+    def test_age_raises(self):
+        with self.assertRaises(ValueError) as ex:
+            self.player1.age = 17
+        self.assertEqual(str(ex.exception), "Players must be at least 18 years of age!")
+
+    def test_add_new_win(self):
+        self.assertEqual(self.player1.add_new_win("Wimbledon"), None)
+        self.assertEqual(self.player1.add_new_win("Wimbledon"), "Wimbledon has been already added to the list of wins!")
+
+    def test_lt(self):
+        self.assertEqual(self.player1 < self.player2, "Rafael Nadal is a top seeded player and he/she is better than Roger Federer")
+
+    def test_str(self):
+        self.player1.add_new_win("Wimbledon")
+        self.player1.add_new_win("US Open")
+        self.assertEqual(str(self.player1), "Tennis Player: Roger Federer\nAge: 40\nPoints: 1000.0\nTournaments won: Wimbledon, US Open")   
+
+if __name__ == "__main__":
+    unittest.main()
